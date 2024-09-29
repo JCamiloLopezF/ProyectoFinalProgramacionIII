@@ -7,17 +7,17 @@ public class Usuario {
     private String numeroTelefono;
     private String direccion;
     private double saldoDisponible;
-    public Cuenta cuentasAsociadas;
+   // public Cuenta cuentasAsociadas;
 
     public Usuario(String idUsuario, String nombreCompleto, String correo, String numeroTelefono, String direccion,
-            double saldoDisponible, Cuenta cuentasAsociadas) {
+            double saldoDisponible) {
         this.idUsuario = idUsuario;
         this.nombreCompleto = nombreCompleto;
         this.correo = correo;
         this.numeroTelefono = numeroTelefono;
         this.direccion = direccion;
         this.saldoDisponible = saldoDisponible;
-        this.cuentasAsociadas = cuentasAsociadas;
+      //  this.cuentasAsociadas = cuentasAsociadas;
     }
 
     public String getIdUsuario() {
@@ -67,7 +67,7 @@ public class Usuario {
     public void setSaldoDisponible(double saldoDisponible) {
         this.saldoDisponible = saldoDisponible;
     }
-
+/*
     public Cuenta getCuentasAsociadas() {
         return cuentasAsociadas;
     }
@@ -75,4 +75,5 @@ public class Usuario {
     public void setCuentasAsociadas(Cuenta cuentasAsociadas) {
         this.cuentasAsociadas = cuentasAsociadas;
     }
+        */
 }

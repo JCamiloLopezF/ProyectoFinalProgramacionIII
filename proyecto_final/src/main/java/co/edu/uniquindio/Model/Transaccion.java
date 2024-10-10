@@ -78,4 +78,12 @@ public class Transaccion {
         this.cuentaDestino = cuentaDestino;
     }
 
+    @Override
+    public String toString() {
+        return "Transaccion [idTransaccion=" + idTransaccion + ", fechaTransaccion=" + fechaTransaccion
+                + ", tipoTransaccion=" + tipoTransaccion + ", monto=" + monto + ", descripcionOpcional="
+                + descripcionOpcional + ", cuentaOrigen=" + cuentaOrigen + ", cuentaDestino=" + cuentaDestino + "]";
+    }
+
+    
 }

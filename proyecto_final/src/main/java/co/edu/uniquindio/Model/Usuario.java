@@ -5,17 +5,17 @@ public class Usuario {
     private String nombreCompleto;
     private String correo;
     private String numeroTelefono;
-    private String direccion;
+    private String contrasenia;
     private double saldoDisponible;
    // public Cuenta cuentasAsociadas;
 
-    public Usuario(String idUsuario, String nombreCompleto, String correo, String numeroTelefono, String direccion,
+    public Usuario(String nombreCompleto, String correo, String numeroTelefono, String idUsuario, String contrasenia,
             double saldoDisponible) {
         this.idUsuario = idUsuario;
         this.nombreCompleto = nombreCompleto;
         this.correo = correo;
         this.numeroTelefono = numeroTelefono;
-        this.direccion = direccion;
+        this.contrasenia = contrasenia;
         this.saldoDisponible = saldoDisponible;
       //  this.cuentasAsociadas = cuentasAsociadas;
     }
@@ -52,12 +52,12 @@ public class Usuario {
         this.numeroTelefono = numeroTelefono;
     }
 
-    public String getDireccion() {
-        return direccion;
+    public String getConntrasenia() {
+        return contrasenia;
     }
 
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
+    public void setContrasenia(String contrasenia) {
+        this.contrasenia= contrasenia;
     }
 
     public double getSaldoDisponible() {
@@ -76,4 +76,11 @@ public class Usuario {
         this.cuentasAsociadas = cuentasAsociadas;
     }
         */
+
+    @Override
+    public String toString() {
+        return "Usuario [idUsuario=" + idUsuario + ", nombreCompleto=" + nombreCompleto + ", correo=" + correo
+                + ", numeroTelefono=" + numeroTelefono + ", contrasenia=" + contrasenia + ", saldoDisponible="
+                + saldoDisponible + "]";
+    }
 }

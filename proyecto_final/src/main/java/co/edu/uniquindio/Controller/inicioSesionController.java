@@ -5,7 +5,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import co.edu.uniquindio.App;
-import co.edu.uniquindio.Model.Usuario;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -36,8 +35,7 @@ public class inicioSesionController {
 
     @FXML
     void btn_iniciar(ActionEvent event) {
-        Usuario usuario = new Usuario("123", usuario_txt.getText(), "asda@gmail.com",
-        "31290392013", "Asomeca", 150000);
+        
 
         try {
             App.setRoot("usuarioView");
@@ -48,8 +46,8 @@ public class inicioSesionController {
     }
 
     @FXML
-    void btn_register(MouseEvent event) {
-
+    void btn_register(MouseEvent event) throws IOException {
+        App.setRoot("registroUsuarioView");
     }
 
     @FXML

@@ -45,4 +45,12 @@ public class Cuenta {
         this.tipoCuenta = tipoCuenta;
     }
 
+    @Override
+    public String toString() {
+        return "Cuenta [idCuenta=" + idCuenta + ", nombreBanco=" + nombreBanco + ", numeroCuenta=" + numeroCuenta
+                + ", tipoCuenta=" + tipoCuenta + "]";
+    }
+
+    
+
 }

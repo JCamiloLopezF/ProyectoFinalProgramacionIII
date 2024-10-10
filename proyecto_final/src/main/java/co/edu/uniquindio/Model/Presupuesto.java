@@ -55,4 +55,12 @@ public class Presupuesto {
     public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
     }
+
+    @Override
+    public String toString() {
+        return "Presupuesto [idPresupuesto=" + idPresupuesto + ", nombre=" + nombre + ", montoTotalAsignado="
+                + montoTotalAsignado + ", montoGastado=" + montoGastado + ", categoria=" + categoria + "]";
+    }
+
+    
 }

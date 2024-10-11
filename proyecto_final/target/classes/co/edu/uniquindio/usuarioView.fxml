@@ -6,20 +6,19 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.Controller.UsuarioController">
    <children>
       <ImageView fitHeight="500.0" fitWidth="800.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@imagenes/imagen_fondo_usuario.png" />
          </image>
       </ImageView>
-      <Text fill="WHITE" layoutX="97.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hola Juan Pablo López ">
+      <Text fx:id="txt_nombreUsuario" fill="WHITE" layoutX="94.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hola">
          <font>
-            <Font name="Berlin Sans FB" size="18.0" />
+            <Font name="Berlin Sans FB" size="24.0" />
          </font>
       </Text>
-      <Text layoutX="51.0" layoutY="177.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Actualizar datos personales" wrappingWidth="210.93667602539062">
+      <Text layoutX="51.0" layoutY="177.0" onMousePressed="#btn_actualizarDatos" strokeType="OUTSIDE" strokeWidth="0.0" text="Actualizar datos personales" wrappingWidth="210.93667602539062">
          <font>
             <Font name="Berlin Sans FB" size="18.0" />
          </font>
@@ -29,12 +28,12 @@
             <Font name="Berlin Sans FB" size="18.0" />
          </font>
       </Text>
-      <Text layoutX="51.0" layoutY="228.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ver transacciones realizadas">
+      <Text layoutX="51.0" layoutY="228.0" onMousePressed="#btn_verTransacciones" strokeType="OUTSIDE" strokeWidth="0.0" text="Ver transacciones realizadas">
          <font>
             <Font name="Berlin Sans FB" size="18.0" />
          </font>
       </Text>
-      <Text layoutX="51.0" layoutY="281.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gestionar cuentas bancarias">
+      <Text layoutX="51.0" layoutY="281.0" onMousePressed="#btn_gestionarCuentas" strokeType="OUTSIDE" strokeWidth="0.0" text="Gestionar cuentas bancarias">
          <font>
             <Font name="Berlin Sans FB" size="18.0" />
          </font>

@@ -2,6 +2,7 @@ module co.edu.uniquindio {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.logging;
+    requires javafx.graphics;
 
     opens co.edu.uniquindio to javafx.fxml;
     exports co.edu.uniquindio;

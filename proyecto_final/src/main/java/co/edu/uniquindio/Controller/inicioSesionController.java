@@ -5,6 +5,9 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import co.edu.uniquindio.App;
+import co.edu.uniquindio.Model.LuxoraWallet;
+import co.edu.uniquindio.View.InicioSesionView;
+import co.edu.uniquindio.View.UsuarioView;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -33,16 +36,19 @@ public class inicioSesionController {
     @FXML
     private TextField usuario_txt;
 
+    LuxoraWallet luxoraWallet = new LuxoraWallet();
+
     @FXML
     void btn_iniciar(ActionEvent event) {
-        
+        String id = usuario_txt.getText();
+        InicioSesionView inicioView = new InicioSesionView();
+        inicioView.verificarUsuarioExistente(id);
 
         try {
             App.setRoot("usuarioView");
         } catch (IOException e) {
             System.out.println("No puedes iniciar sesión");
         }
-
     }
 
     @FXML
@@ -56,7 +62,6 @@ public class inicioSesionController {
         assert contrasenia_txt != null : "fx:id=\"contrasenia_txt\" was not injected: check your FXML file 'inicioSesion.fxml'.";
         assert register != null : "fx:id=\"register\" was not injected: check your FXML file 'inicioSesion.fxml'.";
         assert usuario_txt != null : "fx:id=\"usuario_txt\" was not injected: check your FXML file 'inicioSesion.fxml'.";
-
     }
 
 }

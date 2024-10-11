@@ -2,6 +2,7 @@ package co.edu.uniquindio.Controller;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.LinkedList;
 import java.util.ResourceBundle;
 
 import co.edu.uniquindio.App;
@@ -61,7 +62,7 @@ public class RegistroUsuarioController {
         //Creacion del Log, registroUsuario
         ArchivoUtil.guardarRegistroLog("Se registro el usuario: " + usuario, 1, "registroUsuario", "C:/td/persistencia/log/luxoraWallet_Log.txt");
         
-        App.setRoot("usuarioView");
+        App.setRoot("inicioSesion");
     }
 
     @FXML

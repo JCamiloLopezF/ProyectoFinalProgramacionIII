@@ -6,6 +6,7 @@ public class LuxoraWallet {
     private static LuxoraWallet instanciaUnica;
     public String nombre = "Luxora Wallet";
     public LinkedList<Usuario> usuarios;
+    public LinkedList<Usuario> usuarioSeleccionado;
 
 
     public static LuxoraWallet getInstanciaUnica() {
@@ -26,6 +27,20 @@ public class LuxoraWallet {
     public void agregarUsuario(Usuario usuario){
         this.usuarios.add(usuario);
     }
+
+    public void agregarUsuarioSeleccionado(Usuario usuario){
+        this.usuarios.add(usuario);
+    }
+
+    public LinkedList<Usuario> getUsuarioSeleccionado() {
+        return usuarioSeleccionado;
+    }
+
+    public void setUsuarioSeleccionado(LinkedList<Usuario> usuarioSeleccionado) {
+        this.usuarioSeleccionado = usuarioSeleccionado;
+    }
+
+    
 
     /*
     public Usuario validarUsuarioExiste(Usuario user) {

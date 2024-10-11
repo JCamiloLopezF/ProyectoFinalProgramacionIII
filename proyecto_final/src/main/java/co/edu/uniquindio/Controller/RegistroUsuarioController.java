@@ -61,7 +61,7 @@ public class RegistroUsuarioController {
        
         //Creación del XML y binario
         ArchivoUtil.salvarRecursoSerializado("C:/td/persistencia/usuarioArchivo.dat", usuarioNuevo, true);
-        ArchivoUtil.salvarRecursoSerializadoXML("C:/td/persistencia/usuarioArchivo.xml", usuarioNuevo);
+        ArchivoUtil.salvarRecursoSerializadoXML("C:/td/persistencia/usuarioArchivoXML.xml", usuarioNuevo);
 
         App.setRoot("inicioSesion", "Luxora Wallet - Inicio de sesión");
     }

@@ -185,62 +185,59 @@ public static void guardarRecursoSerializado(String rutaArchivo, Object recurso)
         }
     }
 
-    public static List<Object> cargarRecursoSerializadoXML(String rutaArchivo) throws IOException {
-        List<Object> listaObjetos = new ArrayList<>();
-        XMLDecoder decodificadorXML = null;
-
-        try {
-            // Abrir el archivo XML y decodificar los objetos
-            decodificadorXML = new XMLDecoder(new FileInputStream(rutaArchivo));
-            listaObjetos = (List<Object>) decodificadorXML.readObject(); // Se espera una lista de objetos
-        } catch (FileNotFoundException e) {
-            System.out.println("Archivo no encontrado: " + e.getMessage());
-        } catch (Exception e) {
-            System.out.println("Error al cargar el archivo XML: " + e.getMessage());
-        } finally {
-            if (decodificadorXML != null) {
-                decodificadorXML.close();
-            }
-        }
-        return listaObjetos; // Devolver la lista de objetos
+    public static Object cargarRecursoSerializadoXML(String rutaArchivo) throws IOException {
+        XMLDecoder decodificadorXML;
+        Object objetoXML;
+        decodificadorXML = new XMLDecoder(new FileInputStream(rutaArchivo));
+        objetoXML = decodificadorXML.readObject();
+        decodificadorXML.close();
+        return objetoXML;
     }
 
     public static void salvarRecursoSerializadoXML(String rutaArchivo, Object nuevoObjeto) throws IOException {
-        List<Object> listaObjetos = new ArrayList<>();
+        XMLEncoder codificadorXML;
 
-        // Intentamos cargar los objetos ya guardados
-        try {
-            listaObjetos = cargarRecursoSerializadoXML(rutaArchivo); // Cargar lo que ya está en el archivo
-        } catch (IOException e) {
-            // Si no se puede cargar, simplemente continuamos, el archivo puede no existir aún
-        }
-        // Añadir el nuevo objeto a la lista
-        listaObjetos.add(nuevoObjeto);
-
-        // Guardar toda la lista de objetos de vuelta en el archivo
-        XMLEncoder codificadorXML = null;
-        try {
-            codificadorXML = new XMLEncoder(new FileOutputStream(rutaArchivo));
-            codificadorXML.writeObject(listaObjetos); // Guardar la lista completa
-        } catch (Exception e) {
-            System.out.println("Error al guardar el archivo XML: " + e.getMessage());
-        } finally {
-            if (codificadorXML != null) {
-                codificadorXML.close();
-            }
-        }
+        codificadorXML = new XMLEncoder(new FileOutputStream(rutaArchivo));
+        codificadorXML.writeObject(nuevoObjeto);
+        codificadorXML.close();
     }
 
-    /*
-    public static void salvarRecursoSerializadoXML(String rutaArchivo, Object objeto) throws IOException {
+    public static String generarNombreArchivoRespaldo(String rutaArchivoOriginal) {
+        Calendar cal = Calendar.getInstance();
+        String dia = String.format("%02d", cal.get(Calendar.DATE));
+        String mes = String.format("%02d", cal.get(Calendar.MONTH) + 1);
+        String anio = String.valueOf(cal.get(Calendar.YEAR));
+        String hora = String.format("%02d", cal.get(Calendar.HOUR_OF_DAY));
+        String minuto = String.format("%02d", cal.get(Calendar.MINUTE));
+        String segundo = String.format("%02d", cal.get(Calendar.SECOND));
 
-		XMLEncoder codificadorXML;
+        File archivoOriginal = new File(rutaArchivoOriginal);
+        String nombreArchivo = archivoOriginal.getName().replaceFirst("[.][^.]+$", "");
 
-		codificadorXML = new XMLEncoder(new FileOutputStream(rutaArchivo));
-		codificadorXML.writeObject(objeto);
-		codificadorXML.close();
-	}
-    */
+        String nombreArchivoBackup = nombreArchivo + "_" + dia + mes + anio + "_" + hora + "_" + minuto + "_" + segundo;
+        return archivoOriginal.getParent() + File.separator + "backup" +  File.separator + nombreArchivoBackup;
+    }
 
-   //public static String generarNombreArchivoRespaldo(String) ...
+    public static void crearRespaldoArchivoXML(String rutaArchivoOriginal) throws IOException {
+        String rutaArchivoRespaldo = generarNombreArchivoRespaldo(rutaArchivoOriginal);
+        
+        File archivoOriginal = new File(rutaArchivoOriginal);
+        File archivoRespaldo = new File(rutaArchivoRespaldo);
+
+        if (!archivoRespaldo.getParentFile().exists()) {
+            archivoRespaldo.getParentFile().mkdirs();
+        }
+
+        try (FileInputStream fis = new FileInputStream(archivoOriginal);
+                FileOutputStream fos = new FileOutputStream(archivoRespaldo)) {
+            byte[] buffer = new byte[1024];
+            int longitud;
+
+            while ((longitud = fis.read(buffer)) > 0) {
+                fos.write(buffer, 0, longitud);
+            }
+        }
+
+        System.out.println("Copia de seguridad creada: " + rutaArchivoRespaldo);
+    }
 }

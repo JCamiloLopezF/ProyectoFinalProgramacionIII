@@ -18,7 +18,8 @@ public class App extends Application {
     private static Stage stage;
 
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage primaryStage) throws IOException {
+        stage = primaryStage;
         stage.setTitle("Luxora Wallet -Inicia sesión-");
         scene = new Scene(loadFXML("inicioSesion"), 800, 500);
 

@@ -25,13 +25,7 @@ public class UsuarioController {
     @FXML
     private Text txt_nombreUsuario;
 
-    LuxoraWallet luxoraWallet = new LuxoraWallet();
-
-    public void nombre(){
-        UsuarioView usuarioView = new UsuarioView();
-        txt_nombreUsuario.setText(usuarioView.nombreUsuario());
-    }
-
+    LuxoraWallet luxoraWallet = LuxoraWallet.getInstanciaUnica();
 
     @FXML
     void btn_actualizarDatos(MouseEvent event) {
@@ -50,7 +44,6 @@ public class UsuarioController {
 
     @FXML
     void initialize() {
-
 
         assert txt_nombreUsuario != null : "fx:id=\"txt_idUsuario\" was not injected: check your FXML file 'usuarioView.fxml'.";
 

@@ -43,7 +43,7 @@ public class RegistroUsuarioController {
     @FXML
     private TextField txtx_usuario;
 
-    LuxoraWallet luxoraWallet = new LuxoraWallet();
+    LuxoraWallet luxoraWallet = LuxoraWallet.getInstanciaUnica();
 
     @FXML
     void btn_registrar(ActionEvent event) throws IOException {    

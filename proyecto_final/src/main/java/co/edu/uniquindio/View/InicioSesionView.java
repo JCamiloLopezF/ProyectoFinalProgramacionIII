@@ -7,15 +7,17 @@ import co.edu.uniquindio.Model.Usuario;
 
 public class InicioSesionView {
 
-    LuxoraWallet luxoraWallet = new LuxoraWallet();
+    LuxoraWallet luxoraWallet = LuxoraWallet.getInstanciaUnica();
 
-    public void verificarUsuarioExistente(String idUsuario){
+    public boolean verificarUsuarioExistente(String idUsuario){
         LinkedList<Usuario> usuarios = luxoraWallet.getUsuarios();
 
         for(Usuario usuario : usuarios){
             if(usuario.getIdUsuario().equals(idUsuario)){
-                luxoraWallet.getUsuarioSeleccionado().add(usuario);
+                luxoraWallet.agregarUsuarioSeleccionado(usuario);
+                return true;
             }
         }
+        return false;
     }
 }

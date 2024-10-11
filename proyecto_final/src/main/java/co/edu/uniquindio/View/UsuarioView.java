@@ -8,7 +8,7 @@ import co.edu.uniquindio.Model.Usuario;
 public class UsuarioView {
     
     private String nombre;
-    LuxoraWallet luxoraWallet = new LuxoraWallet();
+    LuxoraWallet luxoraWallet = LuxoraWallet.getInstanciaUnica();
 
     public String nombreUsuario(){
         LinkedList<Usuario> usuario = luxoraWallet.getUsuarioSeleccionado();

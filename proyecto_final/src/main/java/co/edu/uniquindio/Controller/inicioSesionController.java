@@ -36,17 +36,17 @@ public class inicioSesionController {
     @FXML
     private TextField usuario_txt;
 
-    LuxoraWallet luxoraWallet = new LuxoraWallet();
+    LuxoraWallet luxoraWallet = LuxoraWallet.getInstanciaUnica();
 
     @FXML
-    void btn_iniciar(ActionEvent event) {
+    void btn_iniciar(ActionEvent event) throws IOException {
         String id = usuario_txt.getText();
         InicioSesionView inicioView = new InicioSesionView();
-        inicioView.verificarUsuarioExistente(id);
 
-        try {
+        if(inicioView.verificarUsuarioExistente(id) == true){
             App.setRoot("usuarioView");
-        } catch (IOException e) {
+        }
+        else{
             System.out.println("No puedes iniciar sesión");
         }
     }

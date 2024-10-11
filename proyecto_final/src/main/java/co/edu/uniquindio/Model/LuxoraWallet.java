@@ -18,6 +18,7 @@ public class LuxoraWallet {
 
     public LuxoraWallet() {
         this.usuarios = new LinkedList<>();
+        this.usuarioSeleccionado = new LinkedList<>();
     }
 
     public LinkedList<Usuario> getUsuarios() {
@@ -29,7 +30,7 @@ public class LuxoraWallet {
     }
 
     public void agregarUsuarioSeleccionado(Usuario usuario){
-        this.usuarios.add(usuario);
+        this.usuarioSeleccionado.add(usuario);
     }
 
     public LinkedList<Usuario> getUsuarioSeleccionado() {

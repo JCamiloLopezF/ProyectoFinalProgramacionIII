@@ -50,7 +50,6 @@ public class GestorArchivo {
     }
 
     public LinkedList<Usuario> cargarUsuarios(LuxoraWallet luxoraWallet)throws IOException {
-
 		rutaArchivoUsuarios = obtenerRutaUsuariosProperties();
 
 		ArrayList<String> contenido = ArchivoUtil.leerArchivo(rutaArchivoUsuarios);

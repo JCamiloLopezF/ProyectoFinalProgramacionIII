@@ -52,7 +52,6 @@ public class UsuarioController {
     void initialize() {
         assert txt_nombreUsuario != null : "fx:id=\"txt_idUsuario\" was not injected: check your FXML file 'usuarioView.fxml'.";
         iniciar_nombre();
-
     }
 
 }

@@ -3,6 +3,7 @@ module co.edu.uniquindio {
     requires javafx.fxml;
     requires java.logging;
     requires javafx.graphics;
+    requires java.desktop;
 
     opens co.edu.uniquindio to javafx.fxml;
     exports co.edu.uniquindio;

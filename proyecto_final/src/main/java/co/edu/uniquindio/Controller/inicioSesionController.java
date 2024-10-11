@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 
 import co.edu.uniquindio.App;
 import co.edu.uniquindio.Model.LuxoraWallet;
+import co.edu.uniquindio.Persistencia.ArchivoUtil;
 import co.edu.uniquindio.View.InicioSesionView;
 import co.edu.uniquindio.View.UsuarioView;
 import javafx.event.ActionEvent;
@@ -45,16 +46,18 @@ public class inicioSesionController {
         InicioSesionView inicioView = new InicioSesionView();
 
         if(inicioView.verificarUsuarioExistente(id, contrasenia) == true){
-            App.setRoot("usuarioView");
+            App.setRoot("usuarioView", "Luxora Wallet - Pagina principal");
         }
         else{
             System.out.println("No puedes iniciar sesión");
         }
+
+        ArchivoUtil.guardarRegistroLog("El usuario: " + id + " inició sesión", 1, "inicioSesionUsuario", "C:/td/persistencia/log/luxoraWallet_Log.txt");
     }
 
     @FXML
     void btn_register(MouseEvent event) throws IOException {
-        App.setRoot("registroUsuarioView");
+        App.setRoot("registroUsuarioView", "Luxora Wallet - Registrarse");
     }
 
     @FXML

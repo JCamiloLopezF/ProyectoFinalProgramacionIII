@@ -1,6 +1,8 @@
 package co.edu.uniquindio.Model;
 
-public class Usuario {
+import java.io.Serializable;
+
+public class Usuario implements Serializable{
     public String idUsuario;
     private String nombreCompleto;
     private String correo;

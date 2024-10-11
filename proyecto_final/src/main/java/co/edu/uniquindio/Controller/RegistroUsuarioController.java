@@ -1,6 +1,5 @@
 package co.edu.uniquindio.Controller;
 
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -8,6 +7,8 @@ import java.util.ResourceBundle;
 import co.edu.uniquindio.App;
 import co.edu.uniquindio.Model.LuxoraWallet;
 import co.edu.uniquindio.Model.Usuario;
+import co.edu.uniquindio.Persistencia.ArchivoUtil;
+import co.edu.uniquindio.Persistencia.GestorArchivo;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -51,7 +52,15 @@ public class RegistroUsuarioController {
         String usuario = txtx_usuario.getText();
         String contrasenia = txt_contrasenia.getText();
         Usuario usuarioNuevo = new Usuario(nombre, correo, telefono, usuario, contrasenia, 0);
-        luxoraWallet.agregarUsuario(usuarioNuevo);
+        
+        //GUardado del usuario en archivoUsuarios
+        GestorArchivo persistencia = new GestorArchivo();
+        persistencia.guardarUsuario(usuarioNuevo);
+        luxoraWallet.getUsuarios().add(usuarioNuevo);
+
+        //Creacion del Log, registroUsuario
+        ArchivoUtil.guardarRegistroLog("Se registro el usuario: " + usuario, 1, "registroUsuario", "C:/td/persistencia/log/luxoraWallet_Log.txt");
+        
         App.setRoot("usuarioView");
     }
 

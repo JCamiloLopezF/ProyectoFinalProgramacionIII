@@ -2,42 +2,69 @@ package co.edu.uniquindio.Persistencia;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Properties;
 
+import co.edu.uniquindio.Model.LuxoraWallet;
 import co.edu.uniquindio.Model.Usuario;
 
 public class GestorArchivo {
-    private static final String RUTA_USUARIO_ARCHIVO = "C:\\td\\persistencia\\usuarios.txt";
+    String rutaArchivoUsuarios = "";
 
-    public static void guardarUsuario(Usuario usuario) {
-        try (BufferedWriter escritura = new BufferedWriter(new FileWriter(RUTA_USUARIO_ARCHIVO, true))) {
-            escritura.write(usuario.toString() + "\n");
-        } catch (IOException e) {
-            System.err.println("Error al guardar el usuario: "+ e.getMessage());
-        }
+    public static String obtenerRutaUsuariosProperties(){
+        Properties properties= new Properties();
+		try {
+			properties.load(new FileInputStream(new File("C:/td/persistencia/properties.properties")));
+            return properties.get("rutaArchivoUsuarios").toString();
+		} 
+        catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+        catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "";
+	}
+
+    public void guardarUsuario(Usuario usuario) throws IOException{
+        rutaArchivoUsuarios = obtenerRutaUsuariosProperties();
+        StringBuilder textoUsuario = new StringBuilder();
+		
+		textoUsuario.append(usuario.getNombreCompleto()+"@@");
+		textoUsuario.append(usuario.getCorreo()+"@@");
+		textoUsuario.append(usuario.getNumeroTelefono()+"@@");
+		textoUsuario.append(usuario.getIdUsuario() + "@@");
+		textoUsuario.append(usuario.getConntrasenia() + "@@");
+        textoUsuario.append(usuario.getSaldoDisponible() + "\n");
+
+		ArchivoUtil.guardarArchivo(rutaArchivoUsuarios,textoUsuario.toString(),true);
     }
 
-    public static void cargarUsuarios() {
-        try (BufferedReader lectura = new BufferedReader(new FileReader(RUTA_USUARIO_ARCHIVO))) {
-            String linea;
+    public LinkedList<Usuario> cargarUsuarios(LuxoraWallet luxoraWallet)throws IOException {
 
-            while ((linea = lectura.readLine()) != null) {
-                String[] datos = linea.split("@@");
+		rutaArchivoUsuarios = obtenerRutaUsuariosProperties();
 
-                String idUsuario = datos[0];
-                String nombreCompleto = datos[1];
-                String correo = datos[2];
-                String numeroTelefono = datos[3];
-                String contrasenia = datos[4];
-                double saldoDisponible = Double.parseDouble(datos[5]);
+		ArrayList<String> contenido = ArchivoUtil.leerArchivo(rutaArchivoUsuarios);
 
-                Usuario usuario = new Usuario(idUsuario, nombreCompleto, correo, numeroTelefono, contrasenia, saldoDisponible);
+		for (String usuarioTexto: contenido) {
+			String[] split = usuarioTexto.split("@@");
 
-            }
-        } catch (IOException e) {
-            System.err.println("Error al cargar usuarios: " + e.getMessage());
-        }
-    }
+			if (split.length >= 4) {
+				Usuario usuario = new Usuario(split[0], split[1], split[2], split [3], split[4], Double.valueOf(split[3]));
+				luxoraWallet.getUsuarios().add(usuario);
+			} else {
+				System.err.println("Línea con datos incompletos: " + usuarioTexto);
+			}
+		}
+		return luxoraWallet.getUsuarios();
+	}
 }

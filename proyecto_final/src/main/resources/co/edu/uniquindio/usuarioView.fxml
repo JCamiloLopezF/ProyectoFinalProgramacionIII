@@ -13,7 +13,7 @@
             <Image url="@imagenes/imagen_fondo_usuario.png" />
          </image>
       </ImageView>
-      <Text fx:id="txt_nombreUsuario" fill="WHITE" layoutX="94.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hola">
+      <Text fx:id="txt_nombreUsuario" fill="WHITE" layoutX="94.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0">
          <font>
             <Font name="Berlin Sans FB" size="24.0" />
          </font>

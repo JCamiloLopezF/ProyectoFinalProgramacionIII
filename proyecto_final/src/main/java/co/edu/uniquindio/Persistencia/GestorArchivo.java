@@ -43,7 +43,7 @@ public class GestorArchivo {
 		textoUsuario.append(usuario.getCorreo()+"@@");
 		textoUsuario.append(usuario.getNumeroTelefono()+"@@");
 		textoUsuario.append(usuario.getIdUsuario() + "@@");
-		textoUsuario.append(usuario.getConntrasenia() + "@@");
+		textoUsuario.append(usuario.getContrasenia() + "@@");
         textoUsuario.append(usuario.getSaldoDisponible() + "\n");
 
 		ArchivoUtil.guardarArchivo(rutaArchivoUsuarios,textoUsuario.toString(),true);
@@ -59,7 +59,7 @@ public class GestorArchivo {
 			String[] split = usuarioTexto.split("@@");
 
 			if (split.length >= 4) {
-				Usuario usuario = new Usuario(split[0], split[1], split[2], split [3], split[4], Double.valueOf(split[3]));
+				Usuario usuario = new Usuario(split[0], split[1], split[2], split [3], split[4], Double.valueOf(split[5]));
 				luxoraWallet.getUsuarios().add(usuario);
 			} else {
 				System.err.println("Línea con datos incompletos: " + usuarioTexto);

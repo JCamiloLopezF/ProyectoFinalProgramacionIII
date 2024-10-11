@@ -52,7 +52,7 @@ public class Usuario {
         this.numeroTelefono = numeroTelefono;
     }
 
-    public String getConntrasenia() {
+    public String getContrasenia() {
         return contrasenia;
     }
 

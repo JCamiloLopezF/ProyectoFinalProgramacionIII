@@ -7,12 +7,17 @@ import co.edu.uniquindio.Model.Usuario;
 
 public class UsuarioView {
     
-    private String nombre;
+    private String nombre = "";
     LuxoraWallet luxoraWallet = LuxoraWallet.getInstanciaUnica();
 
     public String nombreUsuario(){
         LinkedList<Usuario> usuario = luxoraWallet.getUsuarioSeleccionado();
-        nombre += usuario.get(3);
+        
+        if (!usuario.isEmpty()) {
+            for(Usuario u : usuario){
+                nombre += u.getIdUsuario();
+            }
+        }
         return nombre;
     }
 }

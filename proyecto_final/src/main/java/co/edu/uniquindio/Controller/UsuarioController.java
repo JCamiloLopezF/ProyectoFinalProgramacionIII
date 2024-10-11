@@ -1,7 +1,6 @@
 package co.edu.uniquindio.Controller;
 
 import java.io.IOException;
-import java.lang.classfile.Label;
 import java.net.URL;
 import java.util.LinkedList;
 import java.util.ResourceBundle;
@@ -13,6 +12,7 @@ import co.edu.uniquindio.View.UsuarioView;
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
+import javafx.scene.control.Label;
 
 public class UsuarioController {
 
@@ -26,6 +26,12 @@ public class UsuarioController {
     private Text txt_nombreUsuario;
 
     LuxoraWallet luxoraWallet = LuxoraWallet.getInstanciaUnica();
+    
+    public void iniciar_nombre(){
+        UsuarioView usuario = new UsuarioView();
+        String nombre = usuario.nombreUsuario();
+        txt_nombreUsuario.setText("Hola " + nombre);
+    }
 
     @FXML
     void btn_actualizarDatos(MouseEvent event) {
@@ -44,8 +50,8 @@ public class UsuarioController {
 
     @FXML
     void initialize() {
-
         assert txt_nombreUsuario != null : "fx:id=\"txt_idUsuario\" was not injected: check your FXML file 'usuarioView.fxml'.";
+        iniciar_nombre();
 
     }
 

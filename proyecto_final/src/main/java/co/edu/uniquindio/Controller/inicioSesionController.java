@@ -41,9 +41,10 @@ public class inicioSesionController {
     @FXML
     void btn_iniciar(ActionEvent event) throws IOException {
         String id = usuario_txt.getText();
+        String contrasenia = contrasenia_txt.getText();
         InicioSesionView inicioView = new InicioSesionView();
 
-        if(inicioView.verificarUsuarioExistente(id) == true){
+        if(inicioView.verificarUsuarioExistente(id, contrasenia) == true){
             App.setRoot("usuarioView");
         }
         else{

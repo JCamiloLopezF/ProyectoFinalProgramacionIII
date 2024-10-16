@@ -53,6 +53,10 @@ public class RegistroUsuarioController {
         String usuario = txtx_usuario.getText();
         String contrasenia = txt_contrasenia.getText();
         Usuario usuarioNuevo = new Usuario(nombre, correo, telefono, usuario, contrasenia, 0);
+
+        GestorArchivo persistencia = new GestorArchivo();
+        String rutaArchivoBin = persistencia.obtenerRutaUsuariosProperties("rutaRecursoSerializado");
+        String rutaArchivoXML = persistencia.obtenerRutaUsuariosProperties("rutaSerializadoXML");
         
         guardarUsuario(usuarioNuevo);
 
@@ -60,8 +64,8 @@ public class RegistroUsuarioController {
         ArchivoUtil.guardarRegistroLog("Se registró el usuario: " + usuario, 1, "registroUsuario", "C:/td/persistencia/log/luxoraWallet_Log.txt");
        
         //Creación del XML y binario
-        ArchivoUtil.salvarRecursoSerializado("C:/td/persistencia/usuarioArchivo.dat", usuarioNuevo, true);
-        ArchivoUtil.salvarRecursoSerializadoXML("C:/td/persistencia/usuarioArchivoXML.xml", usuarioNuevo);
+        ArchivoUtil.salvarRecursoSerializado(rutaArchivoBin, usuarioNuevo, true);
+        ArchivoUtil.salvarRecursoSerializadoXML(rutaArchivoXML, usuarioNuevo);
 
         App.setRoot("inicioSesion", "Luxora Wallet - Inicio de sesión");
     }

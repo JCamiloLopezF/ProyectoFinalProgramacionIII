@@ -18,11 +18,11 @@ import co.edu.uniquindio.Model.Usuario;
 public class GestorArchivo {
     String rutaArchivoUsuarios = "";
 
-    public static String obtenerRutaUsuariosProperties(){
+    public static String obtenerRutaUsuariosProperties(String ruta){
         Properties properties= new Properties();
 		try {
 			properties.load(new FileInputStream(new File("C:/td/persistencia/properties.properties")));
-            return properties.get("rutaArchivoUsuarios").toString();
+            return properties.get(ruta).toString();
 		} 
         catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -36,7 +36,7 @@ public class GestorArchivo {
 	}
 
     public void guardarUsuario(Usuario usuario) throws IOException{
-        rutaArchivoUsuarios = obtenerRutaUsuariosProperties();
+        rutaArchivoUsuarios = obtenerRutaUsuariosProperties("rutaArchivoUsuarios");
         StringBuilder textoUsuario = new StringBuilder();
 		
 		textoUsuario.append(usuario.getNombreCompleto()+"@@");
@@ -50,7 +50,7 @@ public class GestorArchivo {
     }
 
     public LinkedList<Usuario> cargarUsuarios(LuxoraWallet luxoraWallet)throws IOException {
-		rutaArchivoUsuarios = obtenerRutaUsuariosProperties();
+		rutaArchivoUsuarios = obtenerRutaUsuariosProperties("rutaArchivoUsuarios");
 
 		ArrayList<String> contenido = ArchivoUtil.leerArchivo(rutaArchivoUsuarios);
 

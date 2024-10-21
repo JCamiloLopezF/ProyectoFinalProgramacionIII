@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 
 import co.edu.uniquindio.Model.LuxoraWallet;
 import co.edu.uniquindio.Model.Usuario;
+import co.edu.uniquindio.Persistencia.ArchivoUtil;
 import co.edu.uniquindio.Persistencia.GestorArchivo;
 import co.edu.uniquindio.View.UsuarioView;
 import javafx.fxml.FXML;
@@ -26,9 +27,9 @@ public class UsuarioController {
     private Text txt_nombreUsuario;
 
     LuxoraWallet luxoraWallet = LuxoraWallet.getInstanciaUnica();
+    UsuarioView usuario = new UsuarioView();
     
     public void iniciar_nombre(){
-        UsuarioView usuario = new UsuarioView();
         String nombre = usuario.nombreUsuario();
         txt_nombreUsuario.setText("Hola " + nombre);
     }
@@ -50,6 +51,9 @@ public class UsuarioController {
 
     @FXML
     void initialize() {
+        String nombre = usuario.nombreUsuario();
+        ArchivoUtil.guardarRegistroLog("El usuario: " + nombre + " inició sesión", 1, "inicioSesionUsuario", "C:/td/persistencia/log/luxoraWallet_Log.txt");
+
         assert txt_nombreUsuario != null : "fx:id=\"txt_idUsuario\" was not injected: check your FXML file 'usuarioView.fxml'.";
         iniciar_nombre();
     }

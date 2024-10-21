@@ -11,6 +11,10 @@ public class Usuario implements Serializable{
     private double saldoDisponible;
    // public Cuenta cuentasAsociadas;
 
+    public Usuario(){
+
+    }
+
     public Usuario(String nombreCompleto, String correo, String numeroTelefono, String idUsuario, String contrasenia,
             double saldoDisponible) {
         this.idUsuario = idUsuario;

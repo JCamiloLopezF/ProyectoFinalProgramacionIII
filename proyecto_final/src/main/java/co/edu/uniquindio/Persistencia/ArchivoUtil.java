@@ -6,7 +6,6 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -15,7 +14,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -95,7 +93,7 @@ public class ArchivoUtil {
 		}
 		finally {
 			fileHandler.close();
-		}      
+		}
     }
 
     private static void cargarFechaSistema() {
@@ -185,6 +183,8 @@ public static void guardarRecursoSerializado(String rutaArchivo, Object recurso)
         }
     }
 
+//MILO ES DE AQUÍ PARA ABAJO
+
     public static Object cargarRecursoSerializadoXML(String rutaArchivo) throws IOException {
         XMLDecoder decodificadorXML;
         Object objetoXML;
@@ -201,6 +201,8 @@ public static void guardarRecursoSerializado(String rutaArchivo, Object recurso)
         codificadorXML.writeObject(nuevoObjeto);
         codificadorXML.close();
     }
+
+//HASTA AQUÍ EN LA PARTE DE ARRIBA
 
     public static String generarNombreArchivoRespaldo(String rutaArchivoOriginal) {
         Calendar cal = Calendar.getInstance();

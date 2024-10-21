@@ -52,7 +52,6 @@ public class inicioSesionController {
             System.out.println("No puedes iniciar sesión");
         }
 
-        ArchivoUtil.guardarRegistroLog("El usuario: " + id + " inició sesión", 1, "inicioSesionUsuario", "C:/td/persistencia/log/luxoraWallet_Log.txt");
     }
 
     @FXML

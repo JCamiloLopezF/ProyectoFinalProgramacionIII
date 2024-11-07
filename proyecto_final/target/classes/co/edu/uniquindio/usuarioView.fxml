@@ -38,5 +38,10 @@
             <Font name="Berlin Sans FB" size="18.0" />
          </font>
       </Text>
+      <Text fill="#ff5d5d" layoutX="648.0" layoutY="60.0" onMousePressed="#btn_cerrarSesion" strokeType="OUTSIDE" strokeWidth="0.0" text="Cerrar sesión" wrappingWidth="115.60336303710938">
+         <font>
+            <Font name="Berlin Sans FB" size="18.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>

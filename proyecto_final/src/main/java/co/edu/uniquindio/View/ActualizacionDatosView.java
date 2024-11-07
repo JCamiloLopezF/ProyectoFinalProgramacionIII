@@ -32,4 +32,6 @@ public class ActualizacionDatosView {
         }
         return direccion;
     }
+
+    
 }

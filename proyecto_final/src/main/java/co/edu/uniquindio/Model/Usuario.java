@@ -22,6 +22,7 @@ public class Usuario implements Serializable{
         this.nombreCompleto = nombreCompleto;
         this.correo = correo;
         this.numeroTelefono = numeroTelefono;
+        this.direccion = direccion;
         this.contrasenia = contrasenia;
         this.saldoDisponible = saldoDisponible;
       //  this.cuentasAsociadas = cuentasAsociadas;

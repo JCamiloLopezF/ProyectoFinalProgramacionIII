@@ -67,4 +67,34 @@ public class GestorArchivo {
 		}
 		return luxoraWallet.getUsuarios();
 	}
+
+	public void actualizarDatosParcialesUsuario(Usuario usuarioActualizado, String nuevaDireccion, String nuevoTelefono, String nuevaContrasenia) throws IOException {
+		rutaArchivoUsuarios = obtenerRutaUsuariosProperties("rutaArchivoUsuarios");
+	
+		// Cargar el contenido completo del archivo
+		ArrayList<String> contenidoArchivo = ArchivoUtil.leerArchivo(rutaArchivoUsuarios);
+		ArrayList<String> contenidoActualizado = new ArrayList<>();
+	
+		for (String linea : contenidoArchivo) {
+			String[] datos = linea.split("@@");
+	
+			// Verificar si esta línea corresponde al usuario que queremos actualizar
+			if (datos[1].equals(usuarioActualizado.getCorreo())) { // Comparar por correo (o algún identificador único)
+				// Actualizar solo los datos específicos sin modificar los otros
+				datos[3] = nuevaDireccion; // Actualiza la dirección
+				datos[2] = nuevoTelefono;  // Actualiza el teléfono
+				datos[5] = nuevaContrasenia; // Actualiza la contraseña
+	
+				// Reconstruir la línea con los datos actualizados
+				String lineaActualizada = String.join("@@", datos);
+				contenidoActualizado.add(lineaActualizada);
+			} else {
+				// Mantener la línea sin cambios
+				contenidoActualizado.add(linea);
+			}
+		}
+	
+		// Sobrescribir el archivo con el contenido actualizado
+		ArchivoUtil.guardarArchivo(rutaArchivoUsuarios, String.join("\n", contenidoActualizado), false);
+	}
 }

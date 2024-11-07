@@ -50,6 +50,12 @@ public class UsuarioController {
     }
 
     @FXML
+    void btn_cerrarSesion(MouseEvent event) throws IOException {
+        luxoraWallet.usuarioSeleccionado.remove();
+        App.setRoot("inicioSesion", "Luxora Wallet -Inicia sesión-");
+    }
+
+    @FXML
     void initialize() {
         iniciar_nombre();
         ArchivoUtil.guardarRegistroLog("El usuario: " + usuario.nombreUsuario() + " inició sesión", 1, "inicioSesionUsuario", "C:/td/persistencia/log/luxoraWallet_Log.txt");

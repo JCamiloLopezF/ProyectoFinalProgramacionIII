@@ -183,8 +183,6 @@ public static void guardarRecursoSerializado(String rutaArchivo, Object recurso)
         }
     }
 
-//MILO ES DE AQUÍ PARA ABAJO
-
     public static Object cargarRecursoSerializadoXML(String rutaArchivo) throws IOException {
         XMLDecoder decodificadorXML;
         Object objetoXML;
@@ -201,8 +199,6 @@ public static void guardarRecursoSerializado(String rutaArchivo, Object recurso)
         codificadorXML.writeObject(nuevoObjeto);
         codificadorXML.close();
     }
-
-//HASTA AQUÍ EN LA PARTE DE ARRIBA
 
     public static String generarNombreArchivoRespaldo(String rutaArchivoOriginal) {
         Calendar cal = Calendar.getInstance();

@@ -7,6 +7,7 @@ public class Usuario implements Serializable{
     private String nombreCompleto;
     private String correo;
     private String numeroTelefono;
+    private String direccion;
     private String contrasenia;
     private double saldoDisponible;
    // public Cuenta cuentasAsociadas;
@@ -15,7 +16,7 @@ public class Usuario implements Serializable{
 
     }
 
-    public Usuario(String nombreCompleto, String correo, String numeroTelefono, String idUsuario, String contrasenia,
+    public Usuario(String nombreCompleto, String correo, String numeroTelefono, String direccion, String idUsuario, String contrasenia,
             double saldoDisponible) {
         this.idUsuario = idUsuario;
         this.nombreCompleto = nombreCompleto;
@@ -50,6 +51,8 @@ public class Usuario implements Serializable{
         this.correo = correo;
     }
 
+    
+
     public String getNumeroTelefono() {
         return numeroTelefono;
     }
@@ -73,7 +76,8 @@ public class Usuario implements Serializable{
     public void setSaldoDisponible(double saldoDisponible) {
         this.saldoDisponible = saldoDisponible;
     }
-/*
+    
+    /*
     public Cuenta getCuentasAsociadas() {
         return cuentasAsociadas;
     }
@@ -81,12 +85,20 @@ public class Usuario implements Serializable{
     public void setCuentasAsociadas(Cuenta cuentasAsociadas) {
         this.cuentasAsociadas = cuentasAsociadas;
     }
-        */
+    */
 
     @Override
     public String toString() {
         return "Usuario [idUsuario=" + idUsuario + ", nombreCompleto=" + nombreCompleto + ", correo=" + correo
                 + ", numeroTelefono=" + numeroTelefono + ", contrasenia=" + contrasenia + ", saldoDisponible="
                 + saldoDisponible + "]";
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
     }
 }

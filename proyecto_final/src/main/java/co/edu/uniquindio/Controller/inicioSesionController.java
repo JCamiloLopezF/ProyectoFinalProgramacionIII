@@ -51,7 +51,6 @@ public class inicioSesionController {
         else{
             System.out.println("No puedes iniciar sesión");
         }
-
     }
 
     @FXML

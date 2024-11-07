@@ -13,7 +13,7 @@
             <Image url="@imagenes/imagen_fondo_usuario.png" />
          </image>
       </ImageView>
-      <Text fx:id="txt_nombreUsuario" fill="WHITE" layoutX="94.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0">
+      <Text fx:id="txt_nombreUsuario" layoutX="106.0" layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="255.99996948242188">
          <font>
             <Font name="Berlin Sans FB" size="24.0" />
          </font>
@@ -23,7 +23,7 @@
             <Font name="Berlin Sans FB" size="18.0" />
          </font>
       </Text>
-      <Text layoutX="566.0" layoutY="177.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Saldo: $1'500.000">
+      <Text fx:id="txt_saldo" layoutX="566.0" layoutY="177.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Saldo: $1'500.000">
          <font>
             <Font name="Berlin Sans FB" size="18.0" />
          </font>

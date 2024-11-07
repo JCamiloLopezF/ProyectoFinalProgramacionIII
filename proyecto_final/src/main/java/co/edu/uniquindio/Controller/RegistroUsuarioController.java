@@ -34,6 +34,9 @@ public class RegistroUsuarioController {
     private TextField txt_contrasenia;
 
     @FXML
+    private TextField txt_direccion;
+
+    @FXML
     private TextField txt_correo;
 
     @FXML
@@ -49,9 +52,10 @@ public class RegistroUsuarioController {
         String nombre = txt_nombre.getText(); 
         String telefono = txt_telefono.getText();
         String correo = txt_correo.getText();
+        String direccion = txt_direccion.getText();
         String usuario = txtx_usuario.getText();
         String contrasenia = txt_contrasenia.getText();
-        Usuario usuarioNuevo = new Usuario(nombre, correo, telefono, usuario, contrasenia, 0);
+        Usuario usuarioNuevo = new Usuario(nombre, correo, telefono, direccion, usuario, contrasenia, 0);
 
         GestorArchivo persistencia = new GestorArchivo();
         String rutaArchivoBin = persistencia.obtenerRutaUsuariosProperties("rutaRecursoSerializado");

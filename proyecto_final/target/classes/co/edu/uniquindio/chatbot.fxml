@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.Controller.ChatBotController">
+   <children>
+      <ImageView fitHeight="500.0" fitWidth="800.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@imagenes/imagen_fondo_transacciones.png" />
+         </image>
+      </ImageView>
+      <Text layoutX="79.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tu chatBot de confianza" textAlignment="CENTER" wrappingWidth="504.21795654296875">
+         <font>
+            <Font name="Berlin Sans FB" size="30.0" />
+         </font>
+      </Text>
+      <Text fx:id="btn_regresar" layoutX="39.0" layoutY="67.0" onMousePressed="#btn_regresar" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;">
+         <font>
+            <Font name="Berlin Sans FB" size="64.0" />
+         </font>
+      </Text>
+      <Label fx:id="txt_respuesta" alignment="TOP_LEFT" layoutX="79.0" layoutY="136.0" prefHeight="178.0" prefWidth="504.0" textAlignment="JUSTIFY" wrapText="true">
+         <font>
+            <Font name="Berlin Sans FB" size="18.0" />
+         </font>
+      </Label>
+      <Button fx:id="btn_enviarPregunta" layoutX="258.0" layoutY="431.0" mnemonicParsing="false" onAction="#btn_enviarPregunta" prefHeight="40.0" prefWidth="146.0" style="-fx-background-color: #f599b8; -fx-background-radius: 20;" text="Enviar mensaje">
+         <font>
+            <Font name="Berlin Sans FB" size="14.0" />
+         </font>
+      </Button>
+      <TextField fx:id="txt_pregunta" alignment="TOP_LEFT" layoutX="79.0" layoutY="351.0" prefHeight="56.0" prefWidth="504.0" promptText="Escribe tu pregunta" style="-fx-background-radius: 20;">
+         <font>
+            <Font name="Berlin Sans FB" size="15.0" />
+         </font>
+      </TextField>
+   </children>
+</AnchorPane>

@@ -58,6 +58,11 @@ public class UsuarioController {
     }
 
     @FXML
+    void btn_preguntasFrecuentes(MouseEvent event) throws IOException {
+        App.setRoot("chatbot", "Preguntas Frecuentes -LuxoraWallet-");
+    }
+
+    @FXML
     void btn_gestionarCuentas(MouseEvent event) {
 
     }

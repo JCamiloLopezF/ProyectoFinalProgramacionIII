@@ -55,7 +55,7 @@
             <Font name="Berlin Sans FB" size="24.0" />
          </font>
       </Text>
-      <Text layoutX="442.0" layoutY="281.0" onMousePressed="#btn_enviarDinero" strokeType="OUTSIDE" strokeWidth="0.0" text="Enviar dinero">
+      <Text layoutX="442.0" layoutY="227.0" onMousePressed="#btn_enviarDinero" strokeType="OUTSIDE" strokeWidth="0.0" text="Enviar dinero">
          <font>
             <Font name="Berlin Sans FB" size="18.0" />
          </font>
@@ -66,5 +66,10 @@
             <Font name="Berlin Sans FB" size="14.0" />
          </font>
       </Button>
+      <Text layoutX="437.0" layoutY="418.0" onMousePressed="#btn_preguntasFrecuentes" strokeType="OUTSIDE" strokeWidth="0.0" text="Preguntas frecuentes">
+         <font>
+            <Font name="Berlin Sans FB" size="18.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>

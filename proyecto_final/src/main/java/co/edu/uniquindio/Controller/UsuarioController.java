@@ -11,10 +11,13 @@ import co.edu.uniquindio.Model.Usuario;
 import co.edu.uniquindio.Persistencia.ArchivoUtil;
 import co.edu.uniquindio.Persistencia.GestorArchivo;
 import co.edu.uniquindio.View.UsuarioView;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 
 public class UsuarioController {
 
@@ -31,7 +34,13 @@ public class UsuarioController {
     private Text txt_saldo;
 
     @FXML
+    private Button btn_depositar;
+
+    @FXML
     private Text btn_saldoDisponible;
+
+    @FXML
+    private TextField txt_montoIngresado;
 
     @FXML
     private Text txt_nombreUsuario;
@@ -39,6 +48,7 @@ public class UsuarioController {
     LuxoraWallet luxoraWallet = LuxoraWallet.getInstanciaUnica();
     Usuario usuarioActual = luxoraWallet.getUsuarioSeleccionado().get(0);
     UsuarioView usuario = new UsuarioView();
+    GestorArchivo gestor = new GestorArchivo();
     
     boolean visibilidadSaldo = false;
 
@@ -64,6 +74,8 @@ public class UsuarioController {
 
     @FXML
     void btn_saldoDisponible(MouseEvent event) {
+        String saldo = String.valueOf(usuarioActual.getSaldoDisponible());
+        txt_saldo.setText("$" + saldo);
         ArchivoUtil.guardarRegistroLog("El usuario " + usuarioActual.getIdUsuario() + " consultó su saldo", 1, "consultarSaldo", "C:/td/persistencia/log/luxoraWallet_Log.txt");
         System.out.println("Consultar saldo");
 
@@ -81,6 +93,17 @@ public class UsuarioController {
     void btn_cerrarSesion(MouseEvent event) throws IOException {
         luxoraWallet.usuarioSeleccionado.remove();
         App.setRoot("inicioSesion", "Luxora Wallet -Inicia sesión-");
+    }
+
+    @FXML
+    void btn_depositar(ActionEvent event) throws IOException {
+        String valorIngresado = txt_montoIngresado.getText();
+        Double valor = Double.parseDouble(valorIngresado);
+        Double valorActual = usuarioActual.getSaldoDisponible();
+        Double valorFinal = valor + valorActual;
+        usuarioActual.setSaldoDisponible(valorFinal);
+        gestor.actualizarSaldoUsuario(usuarioActual, valorFinal);
+        txt_montoIngresado.setText("");
     }
 
     @FXML

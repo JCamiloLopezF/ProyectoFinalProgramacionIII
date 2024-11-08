@@ -99,6 +99,35 @@ public class GestorArchivo {
 		ArchivoUtil.guardarArchivo(rutaArchivoUsuarios, String.join("\n", contenidoActualizado), false);
 	}
 
+	public void actualizarSaldoUsuario(Usuario usuarioActualizado, Double saldo) throws IOException {
+		rutaArchivoUsuarios = obtenerRutaProperties("rutaArchivoUsuarios");
+	
+		// Cargar el contenido completo del archivo
+		ArrayList<String> contenidoArchivo = ArchivoUtil.leerArchivo(rutaArchivoUsuarios);
+		ArrayList<String> contenidoActualizado = new ArrayList<>();
+	
+		for (String linea : contenidoArchivo) {
+			String[] datos = linea.split("@@");
+	
+			// Verificar si esta línea corresponde al usuario que queremos actualizar
+			if (datos[1].equals(usuarioActualizado.getCorreo())) { // Comparar por correo (o algún identificador único)
+				// Actualizar solo los datos específicos sin modificar los otros
+				String saldoStr = String.valueOf(saldo);
+				datos[6] = saldoStr; // Actualiza el saldo
+	
+				// Reconstruir la línea con los datos actualizados
+				String lineaActualizada = String.join("@@", datos);
+				contenidoActualizado.add(lineaActualizada);
+			} else {
+				// Mantener la línea sin cambios
+				contenidoActualizado.add(linea);
+			}
+		}
+	
+		// Sobrescribir el archivo con el contenido actualizado
+		ArchivoUtil.guardarArchivo(rutaArchivoUsuarios, String.join("\n", contenidoActualizado), false);
+	}
+
 	public void guardarTransaccion(Transaccion transaccion) throws IOException{
         rutaArchivoUsuarios = obtenerRutaProperties("rutaArchivoTransacciones");
         StringBuilder textoTransaccion = new StringBuilder();

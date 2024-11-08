@@ -1,7 +1,5 @@
 package co.edu.uniquindio.Model;
 
-import java.time.*;
-
 public class Transaccion {
     public String idTransaccion;
     public String fechaTransaccion;

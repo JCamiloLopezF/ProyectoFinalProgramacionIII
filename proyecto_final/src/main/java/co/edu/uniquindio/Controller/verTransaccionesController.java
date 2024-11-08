@@ -70,7 +70,7 @@ public class VerTransaccionesController {
 
     @FXML
     void initialize() {
-        txt_transacciones.setText(" ");
+        txt_transacciones.setText("");
         
         txt_nombreUsuario.setText("Transacciones realizadas por: " + usuario.nombreUsuario());
 

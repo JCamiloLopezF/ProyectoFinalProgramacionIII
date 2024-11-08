@@ -60,7 +60,7 @@ public class RegistroUsuarioController {
         String direccion = txt_direccion.getText();
         String usuario = txtx_usuario.getText();
         String contrasenia = txt_contrasenia.getText();
-        Usuario usuarioNuevo = new Usuario(nombre, correo, telefono, direccion, usuario, contrasenia, 0);
+        Usuario usuarioNuevo = new Usuario(nombre, correo, telefono, direccion, usuario, contrasenia, 100000);
 
         GestorArchivo persistencia = new GestorArchivo();
         String rutaArchivoBin = persistencia.obtenerRutaProperties("rutaRecursoSerializado");

@@ -52,6 +52,8 @@ public class EnvioDineroController {
     private TextField txt_numeroCuenta;
 
     LuxoraWallet luxoraWallet = LuxoraWallet.getInstanciaUnica();
+    Usuario usuarioActual = luxoraWallet.getUsuarioSeleccionado().get(0);
+    GestorArchivo gestor = new GestorArchivo();
 
     @FXML
     void btn_enviar(ActionEvent event) throws IOException {
@@ -60,6 +62,9 @@ public class EnvioDineroController {
         String descripcion = txt_descripcion.getText();
         String montoStr = txt_monto.getText();
         String fecha = txt_fecha.getText();
+        double monto = Double.parseDouble(montoStr);
+        double montoUsuario = usuarioActual.getSaldoDisponible();
+        double montoFinal = montoUsuario - monto;
 
         Transaccion transaccion = new Transaccion(idTransaccion, fecha, montoStr, descripcion, numeroCuenta);
         guardarTransaccion(transaccion);
@@ -69,11 +74,9 @@ public class EnvioDineroController {
             return;
         }
         
-        try {
-            double monto = Double.parseDouble(montoStr);
-
-            if (monto <= 0) {
-                ArchivoUtil.mostrarAlerta("ERROR!", "El monto debe ser mayor a cero.");
+        try {  
+            if (monto <= 0 || monto > montoUsuario) {
+                ArchivoUtil.mostrarAlerta("ERROR!", "Ingrese un monto correcto");
                 return;
             }
 
@@ -82,6 +85,9 @@ public class EnvioDineroController {
         } catch (NumberFormatException e) {
             ArchivoUtil.mostrarAlerta("ERROR", "El monto ingresado no es válido.");
         }
+
+        usuarioActual.setSaldoDisponible(montoFinal);
+        gestor.actualizarSaldoUsuario(usuarioActual, montoFinal);
 
         App.setRoot("usuarioView", "Luxora Wallet - Pagina principal");
     }

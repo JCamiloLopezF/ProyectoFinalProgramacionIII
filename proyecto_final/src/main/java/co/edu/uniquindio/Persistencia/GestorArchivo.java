@@ -13,12 +13,13 @@ import java.util.LinkedList;
 import java.util.Properties;
 
 import co.edu.uniquindio.Model.LuxoraWallet;
+import co.edu.uniquindio.Model.Transaccion;
 import co.edu.uniquindio.Model.Usuario;
 
 public class GestorArchivo {
     String rutaArchivoUsuarios = "";
 
-    public static String obtenerRutaUsuariosProperties(String ruta){
+    public static String obtenerRutaProperties(String ruta){
         Properties properties= new Properties();
 		try {
 			properties.load(new FileInputStream(new File("C:/td/persistencia/properties.properties")));
@@ -36,7 +37,7 @@ public class GestorArchivo {
 	}
 
     public void guardarUsuario(Usuario usuario) throws IOException{
-        rutaArchivoUsuarios = obtenerRutaUsuariosProperties("rutaArchivoUsuarios");
+        rutaArchivoUsuarios = obtenerRutaProperties("rutaArchivoUsuarios");
         StringBuilder textoUsuario = new StringBuilder();
 		
 		textoUsuario.append(usuario.getNombreCompleto()+"@@");
@@ -51,7 +52,7 @@ public class GestorArchivo {
     }
 
     public LinkedList<Usuario> cargarUsuarios(LuxoraWallet luxoraWallet)throws IOException {
-		rutaArchivoUsuarios = obtenerRutaUsuariosProperties("rutaArchivoUsuarios");
+		rutaArchivoUsuarios = obtenerRutaProperties("rutaArchivoUsuarios");
 
 		ArrayList<String> contenido = ArchivoUtil.leerArchivo(rutaArchivoUsuarios);
 
@@ -69,7 +70,7 @@ public class GestorArchivo {
 	}
 
 	public void actualizarDatosParcialesUsuario(Usuario usuarioActualizado, String nuevaDireccion, String nuevoTelefono, String nuevaContrasenia) throws IOException {
-		rutaArchivoUsuarios = obtenerRutaUsuariosProperties("rutaArchivoUsuarios");
+		rutaArchivoUsuarios = obtenerRutaProperties("rutaArchivoUsuarios");
 	
 		// Cargar el contenido completo del archivo
 		ArrayList<String> contenidoArchivo = ArchivoUtil.leerArchivo(rutaArchivoUsuarios);
@@ -96,5 +97,36 @@ public class GestorArchivo {
 	
 		// Sobrescribir el archivo con el contenido actualizado
 		ArchivoUtil.guardarArchivo(rutaArchivoUsuarios, String.join("\n", contenidoActualizado), false);
+	}
+
+	public void guardarTransaccion(Transaccion transaccion) throws IOException{
+        rutaArchivoUsuarios = obtenerRutaProperties("rutaArchivoTransacciones");
+        StringBuilder textoTransaccion = new StringBuilder();
+		
+		textoTransaccion.append(transaccion.getIdTransaccion()+"@@");
+		textoTransaccion.append(transaccion.getFechaTransaccion()+"@@");
+		textoTransaccion.append(transaccion.getMonto()+"@@");
+		textoTransaccion.append(transaccion.getDescripcionOpcional()+"@@");
+		textoTransaccion.append(transaccion.getNumeroCuenta() + "\n");
+
+		ArchivoUtil.guardarArchivo(rutaArchivoUsuarios,textoTransaccion.toString(),true);
+    }
+
+    public LinkedList<Transaccion> cargarTransacciones(LuxoraWallet luxoraWallet)throws IOException {
+		rutaArchivoUsuarios = obtenerRutaProperties("rutaArchivoTransacciones");
+
+		ArrayList<String> contenido = ArchivoUtil.leerArchivo(rutaArchivoUsuarios);
+
+		for (String transaccionTexto: contenido) {
+			String[] split = transaccionTexto.split("@@");
+
+			if (split.length >= 3) {
+				Transaccion transaccion = new Transaccion(split[0], split[1], split[2], split[3], split [4]);
+				luxoraWallet.getTransacciones().add(transaccion);
+			} else {
+				System.err.println("Línea con datos incompletos: " + transaccionTexto);
+			}
+		}
+		return luxoraWallet.getTransacciones();
 	}
 }

@@ -7,6 +7,7 @@ public class LuxoraWallet {
     public String nombre = "Luxora Wallet";
     public LinkedList<Usuario> usuarios;
     public LinkedList<Usuario> usuarioSeleccionado;
+    public LinkedList<Transaccion> transacciones;
 
 
     public static LuxoraWallet getInstanciaUnica() {
@@ -19,6 +20,7 @@ public class LuxoraWallet {
     public LuxoraWallet() {
         this.usuarios = new LinkedList<>();
         this.usuarioSeleccionado = new LinkedList<>();
+        this.transacciones = new LinkedList<>();
     }
 
     public LinkedList<Usuario> getUsuarios() {
@@ -40,6 +42,16 @@ public class LuxoraWallet {
     public void setUsuarioSeleccionado(LinkedList<Usuario> usuarioSeleccionado) {
         this.usuarioSeleccionado = usuarioSeleccionado;
     }
+
+    public LinkedList<Transaccion> getTransacciones() {
+        return transacciones;
+    }
+
+    public void setTransacciones(LinkedList<Transaccion> transacciones) {
+        this.transacciones = transacciones;
+    }
+
+    
 
     
 

@@ -63,8 +63,8 @@ public class RegistroUsuarioController {
         Usuario usuarioNuevo = new Usuario(nombre, correo, telefono, direccion, usuario, contrasenia, 0);
 
         GestorArchivo persistencia = new GestorArchivo();
-        String rutaArchivoBin = persistencia.obtenerRutaUsuariosProperties("rutaRecursoSerializado");
-        String rutaArchivoXML = persistencia.obtenerRutaUsuariosProperties("rutaSerializadoXML");
+        String rutaArchivoBin = persistencia.obtenerRutaProperties("rutaRecursoSerializado");
+        String rutaArchivoXML = persistencia.obtenerRutaProperties("rutaSerializadoXML");
         
         guardarUsuario(usuarioNuevo);
 

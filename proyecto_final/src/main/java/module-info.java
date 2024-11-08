@@ -5,6 +5,7 @@ module co.edu.uniquindio {
     requires javafx.graphics;
     requires java.desktop;
     requires jdk.jfr;
+    requires java.xml;
 
     opens co.edu.uniquindio to javafx.fxml;
     exports co.edu.uniquindio;

@@ -15,6 +15,7 @@ import javafx.scene.text.Text;
 import co.edu.uniquindio.App;
 import co.edu.uniquindio.Model.LuxoraWallet;
 import co.edu.uniquindio.Model.Usuario;
+import co.edu.uniquindio.Persistencia.ArchivoUtil;
 import co.edu.uniquindio.Persistencia.GestorArchivo;
 import co.edu.uniquindio.View.ActualizacionDatosView;
 import co.edu.uniquindio.View.UsuarioView;
@@ -73,7 +74,7 @@ public class ActualizacionDatosController {
         String contraseniaConfirm = txt_contraseniaConfirm.getText();
 
         if (!contraseniaNueva.equals(contraseniaConfirm)) {
-            mostrarAlerta("ERROR", "La nueva contraseña no concuerda con la confirmación");
+            ArchivoUtil.mostrarAlerta("ERROR", "La nueva contraseña no concuerda con la confirmación");
             return;
         }
 
@@ -91,7 +92,7 @@ public class ActualizacionDatosController {
             // Guardar en el archivo usando el método de actualización parcial
             gestorArchivo.actualizarDatosParcialesUsuario(usuarioSeleccionado, direccionNueva, telefonoNuevo, contraseniaNueva);
         
-            mostrarAlerta("Éxito", "Los datos han sido actualizados correctamente");
+            ArchivoUtil.mostrarAlerta("Éxito", "Los datos han sido actualizados correctamente");
         }
 
         App.setRoot("usuarioView", "Luxora Wallet - Pagina principal");
@@ -100,14 +101,6 @@ public class ActualizacionDatosController {
     @FXML
     void btn_regresar(MouseEvent event) throws IOException {
         App.setRoot("usuarioView", "Luxora Wallet - Pagina principal");
-    }
-
-    private void mostrarAlerta(String titulo, String mensaje) {
-        Alert alerta = new Alert(AlertType.INFORMATION);
-        alerta.setTitle(titulo);
-        alerta.setHeaderText(null);
-        alerta.setContentText(mensaje);
-        alerta.showAndWait();
     }
 
     @FXML

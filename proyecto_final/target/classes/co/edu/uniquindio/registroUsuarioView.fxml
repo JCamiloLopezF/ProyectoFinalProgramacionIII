@@ -55,5 +55,10 @@
          </font>
       </Text>
       <TextField fx:id="txt_direccion" layoutX="312.0" layoutY="243.0" prefHeight="26.0" prefWidth="337.0" style="-fx-border-color: #ea412c; -fx-background-radius: 10; -fx-border-radius: 10;" />
+      <Text fx:id="btn_salir" layoutX="40.0" layoutY="79.0" onMousePressed="#btn_salir" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;">
+         <font>
+            <Font name="Berlin Sans FB" size="72.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>

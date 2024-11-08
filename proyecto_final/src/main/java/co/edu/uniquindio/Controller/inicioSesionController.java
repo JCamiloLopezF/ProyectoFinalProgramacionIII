@@ -11,6 +11,8 @@ import co.edu.uniquindio.View.InicioSesionView;
 import co.edu.uniquindio.View.UsuarioView;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -50,6 +52,7 @@ public class inicioSesionController {
         }
         else{
             System.out.println("No puedes iniciar sesión");
+            ArchivoUtil.mostrarAlerta("Error!!", "La contraseña es incorrecta");
         }
     }
 

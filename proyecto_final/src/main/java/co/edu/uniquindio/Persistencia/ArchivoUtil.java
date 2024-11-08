@@ -19,6 +19,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+
 public class ArchivoUtil {
     static String fechaSistema = "";
 
@@ -237,5 +240,13 @@ public static void guardarRecursoSerializado(String rutaArchivo, Object recurso)
         }
 
         System.out.println("Copia de seguridad creada: " + rutaArchivoRespaldo);
+    }
+
+    public static void mostrarAlerta(String titulo, String mensaje) {
+        Alert alerta = new Alert(AlertType.INFORMATION);
+        alerta.setTitle(titulo);
+        alerta.setHeaderText(null);
+        alerta.setContentText(mensaje);
+        alerta.showAndWait();
     }
 }

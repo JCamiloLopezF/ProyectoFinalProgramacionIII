@@ -25,10 +25,22 @@ public class UsuarioController {
     private URL location;
 
     @FXML
+    private Text txt_saldoCensurado;
+
+    @FXML
+    private Text txt_saldo;
+
+    @FXML
+    private Text btn_saldoDisponible;
+
+    @FXML
     private Text txt_nombreUsuario;
 
     LuxoraWallet luxoraWallet = LuxoraWallet.getInstanciaUnica();
+    Usuario usuarioActual = luxoraWallet.getUsuarioSeleccionado().get(0);
     UsuarioView usuario = new UsuarioView();
+    
+    boolean visibilidadSaldo = false;
 
     @FXML
     void btn_actualizarDatos(MouseEvent event) throws IOException {
@@ -41,8 +53,24 @@ public class UsuarioController {
     }
 
     @FXML
-    void btn_verTransacciones(MouseEvent event) {
+    void btn_verTransacciones(MouseEvent event) throws IOException {
+        App.setRoot("verTransacciones", "Transacciones -LuxoraWallet-");
+    }
 
+    @FXML
+    void btn_enviarDinero(MouseEvent event) throws IOException {
+        App.setRoot("envioDinero", "Envie su dinero -LuxoraWallet-");
+    }
+
+    @FXML
+    void btn_saldoDisponible(MouseEvent event) {
+        ArchivoUtil.guardarRegistroLog("El usuario " + usuarioActual.getIdUsuario() + " consultó su saldo", 1, "consultarSaldo", "C:/td/persistencia/log/luxoraWallet_Log.txt");
+        System.out.println("Consultar saldo");
+
+        visibilidadSaldo = !visibilidadSaldo;
+
+        txt_saldoCensurado.setVisible(!visibilidadSaldo);
+        txt_saldo.setVisible(visibilidadSaldo); 
     }
 
     public void iniciar_nombre(){
@@ -58,7 +86,11 @@ public class UsuarioController {
     @FXML
     void initialize() {
         iniciar_nombre();
-        ArchivoUtil.guardarRegistroLog("El usuario: " + usuario.nombreUsuario() + " inició sesión", 1, "inicioSesionUsuario", "C:/td/persistencia/log/luxoraWallet_Log.txt");
+        ArchivoUtil.guardarRegistroLog("El usuario: " + usuarioActual.getIdUsuario() + " inició sesión", 1, "inicioSesionUsuario", "C:/td/persistencia/log/luxoraWallet_Log.txt");
+
+        txt_saldoCensurado.setVisible(true);
+        txt_saldo.setVisible(false);
+
 
         assert txt_nombreUsuario != null : "fx:id=\"txt_idUsuario\" was not injected: check your FXML file 'usuarioView.fxml'.";   
     }

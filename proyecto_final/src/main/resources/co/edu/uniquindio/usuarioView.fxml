@@ -23,7 +23,7 @@
             <Font name="Berlin Sans FB" size="18.0" />
          </font>
       </Text>
-      <Text fx:id="txt_saldo" layoutX="566.0" layoutY="177.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Saldo: $1'500.000">
+      <Text fx:id="txt_saldo" layoutX="575.0" layoutY="177.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\$2´000.000" wrappingWidth="185.60003662109375">
          <font>
             <Font name="Berlin Sans FB" size="18.0" />
          </font>
@@ -39,6 +39,21 @@
          </font>
       </Text>
       <Text fill="#ff5d5d" layoutX="648.0" layoutY="60.0" onMousePressed="#btn_cerrarSesion" strokeType="OUTSIDE" strokeWidth="0.0" text="Cerrar sesión" wrappingWidth="115.60336303710938">
+         <font>
+            <Font name="Berlin Sans FB" size="18.0" />
+         </font>
+      </Text>
+      <Text fx:id="btn_saldoDisponible" layoutX="442.0" layoutY="177.0" onMousePressed="#btn_saldoDisponible" strokeType="OUTSIDE" strokeWidth="0.0" text="Saldo disponible:" wrappingWidth="132.53665161132812">
+         <font>
+            <Font name="Berlin Sans FB" size="18.0" />
+         </font>
+      </Text>
+      <Text fx:id="txt_saldoCensurado" layoutX="575.0" layoutY="179.0" strokeType="OUTSIDE" strokeWidth="0.0" text="**********" wrappingWidth="185.60003662109375">
+         <font>
+            <Font name="Berlin Sans FB" size="24.0" />
+         </font>
+      </Text>
+      <Text layoutX="442.0" layoutY="281.0" onMousePressed="#btn_enviarDinero" strokeType="OUTSIDE" strokeWidth="0.0" text="Enviar dinero">
          <font>
             <Font name="Berlin Sans FB" size="18.0" />
          </font>

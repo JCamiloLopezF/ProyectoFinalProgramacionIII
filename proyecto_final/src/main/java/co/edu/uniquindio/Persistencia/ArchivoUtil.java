@@ -6,6 +6,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -14,6 +15,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -186,7 +188,7 @@ public static void guardarRecursoSerializado(String rutaArchivo, Object recurso)
         }
     }
 
-    public static Object cargarRecursoSerializadoXML(String rutaArchivo) throws IOException {
+    /**public static Object cargarRecursoSerializadoXML(String rutaArchivo) throws IOException {
         XMLDecoder decodificadorXML;
         Object objetoXML;
         decodificadorXML = new XMLDecoder(new FileInputStream(rutaArchivo));
@@ -201,7 +203,45 @@ public static void guardarRecursoSerializado(String rutaArchivo, Object recurso)
         codificadorXML = new XMLEncoder(new FileOutputStream(rutaArchivo));
         codificadorXML.writeObject(nuevoObjeto);
         codificadorXML.close();
+    }**/
+
+    public static List<Object> cargarRecursoSerializadoXML(String rutaArchivo) throws IOException {
+        List<Object> objetosXML = new ArrayList<>();
+        
+        try (XMLDecoder decodificadorXML = new XMLDecoder(new FileInputStream(rutaArchivo))) {
+            // Leer todos los objetos del archivo XML
+            while (true) {
+                try {
+                    Object objetoXML = decodificadorXML.readObject();
+                    objetosXML.add(objetoXML);
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    break; // Fin del archivo
+                }
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("Archivo no encontrado, se creará uno nuevo al guardar.");
+        }
+        return objetosXML;
     }
+
+    public static void salvarRecursoSerializadoXML(String rutaArchivo, Object nuevoObjeto) throws IOException {
+        List<Object> objetosExistentes = cargarRecursoSerializadoXML(rutaArchivo);
+        objetosExistentes.add(nuevoObjeto); // Agregar el nuevo objeto a la lista
+        
+        try (XMLEncoder codificadorXML = new XMLEncoder(new FileOutputStream(rutaArchivo))) {
+            for (Object objeto : objetosExistentes) {
+                codificadorXML.writeObject(objeto); // Escribir cada objeto en el archivo XML
+            }
+        }
+    }
+
+
+
+
+
+
+
+
 
     public static String generarNombreArchivoRespaldo(String rutaArchivoOriginal) {
         Calendar cal = Calendar.getInstance();

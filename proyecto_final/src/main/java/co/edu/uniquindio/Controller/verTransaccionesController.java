@@ -52,6 +52,7 @@ public class VerTransaccionesController {
     @FXML
     void btn_mostrarTransaccion(ActionEvent event) {
         txt_transacciones.setText(" ");
+        mostrarTransacciones().clear();
         txt_transacciones.setText(verDineroView.mostrarListaTransacciones());
 
         btn_mostrarTransaccion.setDisable(true);

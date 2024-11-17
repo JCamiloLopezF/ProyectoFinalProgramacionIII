@@ -13,10 +13,11 @@ import java.util.LinkedList;
 import java.util.Properties;
 
 import co.edu.uniquindio.Model.LuxoraWallet;
+import co.edu.uniquindio.Model.Presupuesto;
 import co.edu.uniquindio.Model.Transaccion;
 import co.edu.uniquindio.Model.Usuario;
 
-public class GestorArchivo {
+public class  GestorArchivo {
     String rutaArchivoUsuarios = "";
 
     public static String obtenerRutaProperties(String ruta){
@@ -158,4 +159,19 @@ public class GestorArchivo {
 		}
 		return luxoraWallet.getTransacciones();
 	}
+
+	public void guardarPresupuesto(Presupuesto presupuesto) throws IOException {
+		rutaArchivoUsuarios = obtenerRutaProperties("rutaArchivoPresupuestos");
+		StringBuilder textoPresupuesto = new StringBuilder();
+
+		textoPresupuesto.append(presupuesto.getIdPresupuesto()+"@@");
+		textoPresupuesto.append(presupuesto.getNombre()+"@@");
+		textoPresupuesto.append(presupuesto.getMontoTotalAsignado()+"@@");
+		textoPresupuesto.append(presupuesto.getMontoGastado()+"@@");
+		textoPresupuesto.append(presupuesto.getCategoria()+ "\n");
+
+		ArchivoUtil.guardarArchivo(rutaArchivoUsuarios,textoPresupuesto.toString(),true);
+	}
+
+//	public LinkedList<Presupuesto> cargarPresupuestos() throws IOException {}
 }

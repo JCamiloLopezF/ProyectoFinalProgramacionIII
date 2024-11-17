@@ -61,6 +61,4 @@ public class Presupuesto {
         return "Presupuesto [idPresupuesto=" + idPresupuesto + ", nombre=" + nombre + ", montoTotalAsignado="
                 + montoTotalAsignado + ", montoGastado=" + montoGastado + ", categoria=" + categoria + "]";
     }
-
-    
 }

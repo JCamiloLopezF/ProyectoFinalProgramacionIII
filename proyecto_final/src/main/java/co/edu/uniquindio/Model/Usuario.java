@@ -1,6 +1,8 @@
 package co.edu.uniquindio.Model;
 
 import java.io.Serializable;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Usuario implements Serializable{
     public String idUsuario;
@@ -10,7 +12,8 @@ public class Usuario implements Serializable{
     private String direccion;
     private String contrasenia;
     private double saldoDisponible;
-   // public Cuenta cuentasAsociadas;
+    private List<Cuenta> cuentasBancarias = new LinkedList<Cuenta>();
+    public Cuenta cuentaBilletera;
 
     public Usuario(){
 
@@ -25,7 +28,6 @@ public class Usuario implements Serializable{
         this.direccion = direccion;
         this.contrasenia = contrasenia;
         this.saldoDisponible = saldoDisponible;
-      //  this.cuentasAsociadas = cuentasAsociadas;
     }
 
     public String getIdUsuario() {
@@ -52,8 +54,6 @@ public class Usuario implements Serializable{
         this.correo = correo;
     }
 
-    
-
     public String getNumeroTelefono() {
         return numeroTelefono;
     }
@@ -77,22 +77,28 @@ public class Usuario implements Serializable{
     public void setSaldoDisponible(double saldoDisponible) {
         this.saldoDisponible = saldoDisponible;
     }
-    
-    /*
-    public Cuenta getCuentasAsociadas() {
-        return cuentasAsociadas;
+
+    public List<Cuenta> getCuentasBancarias() {
+        return cuentasBancarias;
     }
 
-    public void setCuentasAsociadas(Cuenta cuentasAsociadas) {
-        this.cuentasAsociadas = cuentasAsociadas;
+    public void setCuentasBancarias(List<Cuenta> cuentasBancarias) {
+        this.cuentasBancarias = cuentasBancarias;
     }
-    */
+
+    public Cuenta getCuentaBilletera() {
+        return cuentaBilletera;
+    }
+
+    public void setCuentaBilletera(Cuenta cuentaBilletera) {
+        this.cuentaBilletera = cuentaBilletera;
+    }
 
     @Override
     public String toString() {
         return "Usuario [idUsuario=" + idUsuario + ", nombreCompleto=" + nombreCompleto + ", correo=" + correo
                 + ", numeroTelefono=" + numeroTelefono + ", contrasenia=" + contrasenia + ", saldoDisponible="
-                + saldoDisponible + "]";
+                + saldoDisponible + ", cuentaBilletera=" + cuentaBilletera + ", cuentasBancarias=" + cuentasBancarias + "]";
     }
 
     public String getDireccion() {

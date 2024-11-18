@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Properties;
 
 import co.edu.uniquindio.Model.Cuenta;
@@ -253,43 +254,42 @@ public class GestorArchivo {
 		ArchivoUtil.guardarArchivo(rutaArchivoUsuarios, textoPresupuestos.toString(), false);
 	}
 
-	public double eliminarPresupuesto(String nombrePresupuesto, Usuario usuario) {
-		LinkedList<Presupuesto> presupuestos = usuario.getPresupuestos();
-		Presupuesto presupuestoAEliminar = null;
+	public double eliminarPresupuesto(String nombrePresupuesto) throws IOException {
+		// Ruta del archivo de presupuestos
+		rutaArchivoUsuarios = obtenerRutaProperties("rutaArchivoPresupuestos");
+		List<String> lineasArchivo = ArchivoUtil.leerArchivo(rutaArchivoUsuarios);
+		StringBuilder textoPresupuestos = new StringBuilder();
 		double montoEliminado = 0;
+		boolean encontrado = false;
 
-		// Buscar el presupuesto que coincida con el nombre
-		for (Presupuesto presupuesto : presupuestos) {
-			if (presupuesto.getNombre().equals(nombrePresupuesto)) {
-				presupuestoAEliminar = presupuesto;
-				montoEliminado = presupuesto.getMontoTotalAsignado();
+		// Recorrer las líneas del archivo para buscar el presupuesto por nombre
+		for (String linea : lineasArchivo) {
+			String[] partes = linea.split("@@");
+			String nombre = partes[0];
+			double monto = Double.parseDouble(partes[1]);
+
+			// Si el nombre coincide, se elimina (no se añade al nuevo contenido)
+			if (nombre.equals(nombrePresupuesto) && !encontrado) {
+				montoEliminado = monto;
 				System.out.println("Monto del presupuesto eliminado: " + montoEliminado);
-				break;
+				encontrado = true;
+			} else {
+				// Si no coincide, se guarda en el nuevo contenido
+				textoPresupuestos.append(linea).append("\n");
 			}
 		}
 
-		// Si se encontró el presupuesto, eliminarlo de la lista
-		if (presupuestoAEliminar != null) {
-			presupuestos.remove(presupuestoAEliminar);
-			System.out.println("Presupuesto eliminado correctamente.");
+		// Sobrescribir el archivo con los presupuestos actualizados
+		ArchivoUtil.guardarArchivo(rutaArchivoUsuarios, textoPresupuestos.toString(), false);
 
-			// Guarda la lista actualizada en el archivo
-			try {
-				guardarPresupuestosActualizados(usuario);
-			} catch (IOException e) {
-				System.out.println("Error al guardar los presupuestos: " + e.getMessage());
-			}
+		if (encontrado) {
+			System.out.println("Presupuesto eliminado correctamente.");
 		} else {
 			System.out.println("Presupuesto no encontrado.");
 		}
 
 		return montoEliminado;
 	}
-
-
-
-
-
 
 
 //************************

@@ -39,15 +39,15 @@ public class GestionPresupuestosController {
     CreacionPresupuestoController creacion = new CreacionPresupuestoController();
 
     @FXML
-    void btn_EliminarPresupuesto(ActionEvent event) {
+    void btn_EliminarPresupuesto(ActionEvent event) throws IOException {
         String nombrePresupuesto = txt_presupuestoEliminar.getText();
-        //double presupuestoEliminado = gestor.eliminarPresupuesto(nombrePresupuesto, usuarioActual);
+        double presupuestoEliminado = gestor.eliminarPresupuesto(nombrePresupuesto);
 
         Double valorUsuario = usuarioActual.getSaldoDisponible();
 
-       // Double valorNuevo = valorUsuario + presupuestoEliminado;
-        //usuarioActual.setSaldoDisponible(valorNuevo);
-        gestor.eliminarPresupuesto(nombrePresupuesto, usuarioActual);
+        Double valorNuevo = valorUsuario + presupuestoEliminado;
+        usuarioActual.setSaldoDisponible(valorNuevo);
+
     }
 
     @FXML

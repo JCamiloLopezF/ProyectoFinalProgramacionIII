@@ -57,9 +57,26 @@ public class Administrador extends Usuario {
     }
 
     public List<Transaccion> listarTransacciones() throws IOException {
-        return null;
+        return new GestorArchivo().cargarTransacciones(new LuxoraWallet(), new Usuario());
     }
 
+    public void mostrarEstadisticas() {
+        //...
+    }
 
+    public void mostrarEstadisticasEnGrafica() {
+        //dios mio
+    }
 
+    public void gastosComunes() {
+        //aaaaa
+    }
+
+    public void usuariosConMasTransacciones() {
+        //robinson tiene huevo
+    }
+
+    public void saldoPromedioUsuarios() {
+        //aaaaaa
+    }
 }

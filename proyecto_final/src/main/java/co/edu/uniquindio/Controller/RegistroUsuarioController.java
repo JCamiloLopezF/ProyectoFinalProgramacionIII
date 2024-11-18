@@ -87,7 +87,7 @@ public class RegistroUsuarioController {
 
     @FXML
     void btn_salir(MouseEvent event) throws IOException {
-        App.setRoot("usuarioView", "Luxora Wallet - Pagina principal");
+        App.setRoot("inicioSesion", "Luxora Wallet - Pagina principal");
     }
 
     @FXML

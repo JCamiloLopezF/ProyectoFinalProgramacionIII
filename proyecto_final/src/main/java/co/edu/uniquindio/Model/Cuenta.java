@@ -4,13 +4,26 @@ public class Cuenta {
     public String idCuenta;
     public String nombreBanco;
     public String numeroCuenta;
+<<<<<<< Updated upstream
     public TipoCuenta tipoCuenta;
+=======
+    public String tipoCuenta;
+    public double saldo;
+    public String nombreUsuario;
+    private List<Transaccion> transacciones = new LinkedList<Transaccion>();
+>>>>>>> Stashed changes
 
-    public Cuenta(String idCuenta, String nombreBanco, String numeroCuenta, TipoCuenta tipoCuenta) {
+    public Cuenta(String idCuenta, String nombreBanco, String numeroCuenta, String tipoCuenta, double saldo, String nombreUsuario) {
         this.idCuenta = idCuenta;
         this.nombreBanco = nombreBanco;
         this.numeroCuenta = numeroCuenta;
         this.tipoCuenta = tipoCuenta;
+<<<<<<< Updated upstream
+=======
+        this.saldo = saldo;
+        this.transacciones = new LinkedList<>();
+        this.nombreUsuario = nombreUsuario;
+>>>>>>> Stashed changes
     }
 
     public String getIdCuenta() {
@@ -19,6 +32,14 @@ public class Cuenta {
 
     public void setIdCuenta(String idCuenta) {
         this.idCuenta = idCuenta;
+    }
+
+    public String getNombreUsuario() {
+        return nombreUsuario;
+    }
+
+    public void setNombreUsuario(String nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
     }
 
     public String getNombreBanco() {
@@ -37,11 +58,15 @@ public class Cuenta {
         this.numeroCuenta = numeroCuenta;
     }
 
+<<<<<<< Updated upstream
     public TipoCuenta getTipoCuenta() {
         return tipoCuenta;
     }
+=======
+    public String getTipoCuenta() {return tipoCuenta;}
+>>>>>>> Stashed changes
 
-    public void setTipoCuenta(TipoCuenta tipoCuenta) {
+    public void setTipoCuenta(String tipoCuenta) {
         this.tipoCuenta = tipoCuenta;
     }
 

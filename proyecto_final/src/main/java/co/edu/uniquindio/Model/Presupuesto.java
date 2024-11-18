@@ -1,27 +1,14 @@
 package co.edu.uniquindio.Model;
 
 public class Presupuesto {
-    public String idPresupuesto;
+
     public String nombre;
     public double montoTotalAsignado;
-    public double montoGastado;
-    public Categoria categoria;
+    public String nombreUsuario;
     
-    public Presupuesto(String idPresupuesto, String nombre, double montoTotalAsignado, double montoGastado,
-            Categoria categoria) {
-        this.idPresupuesto = idPresupuesto;
+    public Presupuesto(String nombre, double montoTotalAsignado, String nombreUsuario) {
         this.nombre = nombre;
         this.montoTotalAsignado = montoTotalAsignado;
-        this.montoGastado = montoGastado;
-        this.categoria = categoria;
-    }
-
-    public String getIdPresupuesto() {
-        return idPresupuesto;
-    }
-
-    public void setIdPresupuesto(String idPresupuesto) {
-        this.idPresupuesto = idPresupuesto;
     }
 
     public String getNombre() {
@@ -40,25 +27,18 @@ public class Presupuesto {
         this.montoTotalAsignado = montoTotalAsignado;
     }
 
-    public double getMontoGastado() {
-        return montoGastado;
+    public String getNombreUsuario() {
+        return nombreUsuario;
     }
 
-    public void setMontoGastado(double montoGastado) {
-        this.montoGastado = montoGastado;
-    }
-
-    public Categoria getCategoria() {
-        return categoria;
-    }
-
-    public void setCategoria(Categoria categoria) {
-        this.categoria = categoria;
+    public void setNombreUsuario(String nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
     }
 
     @Override
     public String toString() {
-        return "Presupuesto [idPresupuesto=" + idPresupuesto + ", nombre=" + nombre + ", montoTotalAsignado="
-                + montoTotalAsignado + ", montoGastado=" + montoGastado + ", categoria=" + categoria + "]";
+        return "Motivo: " + nombre + "; Monto asignado = $" + montoTotalAsignado + "\n";
     }
+
+    
 }

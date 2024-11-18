@@ -8,6 +8,7 @@ import java.util.ResourceBundle;
 import co.edu.uniquindio.App;
 import co.edu.uniquindio.Model.LuxoraWallet;
 import co.edu.uniquindio.Model.Transaccion;
+import co.edu.uniquindio.Model.Usuario;
 import co.edu.uniquindio.Persistencia.GestorArchivo;
 import co.edu.uniquindio.View.UsuarioView;
 import co.edu.uniquindio.View.VerDineroView;
@@ -40,6 +41,7 @@ public class VerTransaccionesController {
 
     LuxoraWallet luxora = LuxoraWallet.getInstanciaUnica();
     VerDineroView verDineroView = new VerDineroView();
+    Usuario usuarioActual = luxora.getUsuarioSeleccionado().get(0);
     UsuarioView usuario = new UsuarioView();
 
 
@@ -61,8 +63,8 @@ public class VerTransaccionesController {
     public LinkedList<Transaccion> mostrarTransacciones() {
         GestorArchivo gestor = new GestorArchivo();
         try {
-            gestor.cargarTransacciones(luxora);
-            return luxora.getTransacciones();
+            gestor.cargarTransacciones(luxora, usuarioActual);
+            return usuarioActual.getTransacciones();
         } catch(IOException e){
             e.printStackTrace();
         }

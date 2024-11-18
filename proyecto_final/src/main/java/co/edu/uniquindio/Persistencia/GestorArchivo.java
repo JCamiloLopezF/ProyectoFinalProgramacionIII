@@ -1,12 +1,8 @@
 package co.edu.uniquindio.Persistencia;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -129,7 +125,7 @@ public class  GestorArchivo {
 		ArchivoUtil.guardarArchivo(rutaArchivoUsuarios, String.join("\n", contenidoActualizado), false);
 	}
 
-	public void guardarTransaccion(Transaccion transaccion) throws IOException{
+	public void guardarTransaccion(Transaccion transaccion, Usuario usuario) throws IOException{
         rutaArchivoUsuarios = obtenerRutaProperties("rutaArchivoTransacciones");
         StringBuilder textoTransaccion = new StringBuilder();
 		
@@ -137,12 +133,14 @@ public class  GestorArchivo {
 		textoTransaccion.append(transaccion.getFechaTransaccion()+"@@");
 		textoTransaccion.append(transaccion.getMonto()+"@@");
 		textoTransaccion.append(transaccion.getDescripcionOpcional()+"@@");
-		textoTransaccion.append(transaccion.getNumeroCuenta() + "\n");
+		textoTransaccion.append(transaccion.getNumeroCuenta() + "@@");
+		textoTransaccion.append(usuario.getIdUsuario() + "\n");
 
 		ArchivoUtil.guardarArchivo(rutaArchivoUsuarios,textoTransaccion.toString(),true);
+		usuario.getTransacciones().add(transaccion);
     }
 
-    public LinkedList<Transaccion> cargarTransacciones(LuxoraWallet luxoraWallet)throws IOException {
+    /**public LinkedList<Transaccion> cargarTransacciones(LuxoraWallet luxoraWallet)throws IOException {
 		rutaArchivoUsuarios = obtenerRutaProperties("rutaArchivoTransacciones");
 
 		ArrayList<String> contenido = ArchivoUtil.leerArchivo(rutaArchivoUsuarios);
@@ -150,28 +148,109 @@ public class  GestorArchivo {
 		for (String transaccionTexto: contenido) {
 			String[] split = transaccionTexto.split("@@");
 
-			if (split.length >= 3) {
-				Transaccion transaccion = new Transaccion(split[0], split[1], split[2], split[3], split [4]);
+			if (split.length >= 4) {
+				Transaccion transaccion = new Transaccion(split[0], split[1], split[2], split[3], split [4], split[5]);
 				luxoraWallet.getTransacciones().add(transaccion);
 			} else {
 				System.err.println("Línea con datos incompletos: " + transaccionTexto);
 			}
 		}
 		return luxoraWallet.getTransacciones();
-	}
+	}**/
 
-	public void guardarPresupuesto(Presupuesto presupuesto) throws IOException {
+	public LinkedList<Transaccion> cargarTransacciones(LuxoraWallet luxoraWallet, Usuario usuario) throws IOException {
+		// Obtiene la ruta al archivo de transacciones desde las properties
+		rutaArchivoUsuarios = obtenerRutaProperties("rutaArchivoTransacciones");
+	
+		// Lista para almacenar las transacciones filtradas
+		LinkedList<Transaccion> transaccionesFiltradas = new LinkedList<>();
+	
+		// Lee las líneas del archivo
+		ArrayList<String> contenido = ArchivoUtil.leerArchivo(rutaArchivoUsuarios);
+	
+		for (String transaccionTexto : contenido) {
+			// Divide la línea en partes usando "@@" como separador
+			String[] split = transaccionTexto.split("@@");
+	
+			if (split.length == 6) {
+				try {
+					// Verifica si el id del usuario de la transacción coincide con el id del usuario actual
+					String idUsuarioTransaccion = split[5];
+					if (idUsuarioTransaccion.equals(usuario.getIdUsuario())) {
+						// Crea una nueva transacción a partir de los datos
+						Transaccion transaccion = new Transaccion(
+							split[0], // Detalle 1
+							split[1], // Detalle 2
+							split[2], // Detalle 3
+							split[3], // Detalle 4
+							split[4], // Detalle 5
+							idUsuarioTransaccion // ID del usuario
+						);
+						transaccionesFiltradas.add(transaccion);
+					}
+				} catch (Exception e) {
+					System.err.println("Error al procesar la transacción: " + transaccionTexto);
+				}
+			} else {
+				System.err.println("Línea con datos incompletos: " + transaccionTexto);
+			}
+		}
+	
+		// Asigna las transacciones cargadas a la wallet del usuario
+		usuario.setTransacciones(transaccionesFiltradas);
+		return transaccionesFiltradas;
+	}
+	
+
+	public void guardarPresupuesto(Presupuesto presupuesto, Usuario usuario) throws IOException {
 		rutaArchivoUsuarios = obtenerRutaProperties("rutaArchivoPresupuestos");
 		StringBuilder textoPresupuesto = new StringBuilder();
 
-		textoPresupuesto.append(presupuesto.getIdPresupuesto()+"@@");
 		textoPresupuesto.append(presupuesto.getNombre()+"@@");
-		textoPresupuesto.append(presupuesto.getMontoTotalAsignado()+"@@");
-		textoPresupuesto.append(presupuesto.getMontoGastado()+"@@");
-		textoPresupuesto.append(presupuesto.getCategoria()+ "\n");
+		textoPresupuesto.append(presupuesto.getMontoTotalAsignado() + "@@");
+		textoPresupuesto.append(usuario.getIdUsuario() + "\n");
 
 		ArchivoUtil.guardarArchivo(rutaArchivoUsuarios,textoPresupuesto.toString(),true);
+		usuario.agregarPresupuesto(presupuesto);
 	}
 
-//	public LinkedList<Presupuesto> cargarPresupuestos() throws IOException {}
+	public LinkedList<Presupuesto> cargarPresupuestos(Usuario usuario) throws IOException {
+		// Obtiene la ruta al archivo de presupuestos desde las properties
+		rutaArchivoUsuarios = obtenerRutaProperties("rutaArchivoPresupuestos");
+	
+		// Lista para almacenar los presupuestos cargados
+		LinkedList<Presupuesto> presupuestosFiltrados = new LinkedList<>();
+	
+		// Lee las líneas del archivo
+		ArrayList<String> lineasArchivo = ArchivoUtil.leerArchivo(rutaArchivoUsuarios);
+	
+		for (String linea : lineasArchivo) {
+			// Divide la línea en partes usando "@@" como separador
+			String[] partes = linea.split("@@");
+	
+			if (partes.length == 3) {
+				try {
+					// Verifica si el id del presupuesto coincide con el id del usuario
+					String idUsuarioPresupuesto = partes[2];
+					if (idUsuarioPresupuesto.equals(usuario.getIdUsuario())) {
+						// Crea un nuevo presupuesto a partir de los datos
+						String nombrePresupuesto = partes[0];
+						double monto = Double.parseDouble(partes[1]);
+	
+						Presupuesto presupuesto = new Presupuesto(nombrePresupuesto, monto, idUsuarioPresupuesto);
+						presupuestosFiltrados.add(presupuesto);
+					}
+				} catch (NumberFormatException e) {
+					System.err.println("Error al parsear monto: " + partes[1]);
+				}
+			} else {
+				System.err.println("Línea con datos incompletos: " + linea);
+			}
+		}
+	
+		// Asigna los presupuestos cargados al usuario
+		usuario.setPresupuestos(presupuestosFiltrados);
+		return presupuestosFiltrados;
+	}
+	
 }

@@ -1,6 +1,5 @@
 package co.edu.uniquindio.Model;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -10,7 +9,6 @@ public class Cuenta {
     public String numeroCuenta;
     public TipoCuenta tipoCuenta;
     public double saldo;
-    private List<Presupuesto> presupuestos = new LinkedList<Presupuesto>();
     private List<Transaccion> transacciones = new LinkedList<Transaccion>();
 
     public Cuenta(String idCuenta, String nombreBanco, String numeroCuenta, TipoCuenta tipoCuenta) {
@@ -59,20 +57,11 @@ public class Cuenta {
         transacciones.add(transaccion);
     }
 
-    public void agregarPresupuesto (Presupuesto presupuesto){presupuestos.add(presupuesto);}
-
-    public void eliminarPresupuesto (Presupuesto presupuesto){presupuestos.remove(presupuesto);}
-
     public List<Transaccion> getTransacciones() {return transacciones;}
-
-    public List<Presupuesto> getPresupuestos() {return presupuestos;}
 
     @Override
     public String toString() {
         return "Cuenta [idCuenta=" + idCuenta + ", nombreBanco=" + nombreBanco + ", numeroCuenta=" + numeroCuenta
                 + ", tipoCuenta=" + tipoCuenta + ", saldo=" + saldo + "]";
     }
-
-    
-
 }

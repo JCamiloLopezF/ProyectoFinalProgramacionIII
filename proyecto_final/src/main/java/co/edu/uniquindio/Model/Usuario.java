@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
+import co.edu.uniquindio.Persistencia.GestorArchivo;
+
 public class Usuario implements Serializable{
     public String idUsuario;
     private String nombreCompleto;
@@ -13,7 +15,10 @@ public class Usuario implements Serializable{
     private String contrasenia;
     private double saldoDisponible;
     private List<Cuenta> cuentasBancarias = new LinkedList<Cuenta>();
+    private LinkedList<Presupuesto> presupuestos;
+    private LinkedList<Transaccion> transacciones;
     public Cuenta cuentaBilletera;
+    GestorArchivo gestor = new GestorArchivo();
 
     public Usuario(){
 
@@ -28,6 +33,8 @@ public class Usuario implements Serializable{
         this.direccion = direccion;
         this.contrasenia = contrasenia;
         this.saldoDisponible = saldoDisponible;
+        this.presupuestos = new LinkedList<>();
+        this.transacciones = new LinkedList<>();
     }
 
     public String getIdUsuario() {
@@ -36,6 +43,14 @@ public class Usuario implements Serializable{
 
     public void setIdUsuario(String idUsuario) {
         this.idUsuario = idUsuario;
+    }
+
+    public LinkedList<Transaccion> getTransacciones() {
+        return transacciones;
+    }
+
+    public void setTransacciones(LinkedList<Transaccion> transacciones) {
+        this.transacciones = transacciones;
     }
 
     public String getNombreCompleto() {
@@ -107,5 +122,19 @@ public class Usuario implements Serializable{
 
     public void setDireccion(String direccion) {
         this.direccion = direccion;
+    }
+
+    public void agregarPresupuesto (Presupuesto presupuesto){
+        presupuestos.add(presupuesto);
+    }
+
+    public void eliminarPresupuesto (Presupuesto presupuesto){presupuestos.remove(presupuesto);}
+
+    public LinkedList<Presupuesto> getPresupuestos() {
+        return presupuestos;
+    }
+
+    public void setPresupuestos(LinkedList<Presupuesto> presupuestos) {
+        this.presupuestos = presupuestos;
     }
 }

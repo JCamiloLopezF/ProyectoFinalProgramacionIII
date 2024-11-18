@@ -2,7 +2,6 @@ package co.edu.uniquindio.Controller;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.LinkedList;
 import java.util.ResourceBundle;
 
 import co.edu.uniquindio.App;
@@ -13,11 +12,10 @@ import co.edu.uniquindio.Persistencia.GestorArchivo;
 import co.edu.uniquindio.View.UsuarioView;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 
 public class UsuarioController {
 
@@ -58,13 +56,18 @@ public class UsuarioController {
     }
 
     @FXML
+    void btn_gestionarPresupuestos(MouseEvent event) throws IOException {
+        App.setRoot("gestionPresupuestosView", "Gestiona tus presupuestos -LuxoraWallet-");
+    }
+
+    @FXML
     void btn_preguntasFrecuentes(MouseEvent event) throws IOException {
         App.setRoot("chatbot", "Preguntas Frecuentes -LuxoraWallet-");
     }
 
     @FXML
-    void btn_gestionarCuentas(MouseEvent event) {
-
+    void btn_gestionarCuentas(MouseEvent event) throws IOException {
+        App.setRoot("gestionCuentasView", "Gestiona tus cuentas -LuxoraWallet-");
     }
 
     @FXML
@@ -104,10 +107,28 @@ public class UsuarioController {
     void btn_depositar(ActionEvent event) throws IOException {
         String valorIngresado = txt_montoIngresado.getText();
         Double valor = Double.parseDouble(valorIngresado);
+
+        if (valorIngresado.isEmpty()) {
+            ArchivoUtil.mostrarAlerta("ERROR!", "Por favor, complete todos los campos requeridos.");
+            return;
+        }
+
+        try {  
+            if (valor <= 0) {
+                ArchivoUtil.mostrarAlerta("ERROR!", "Ingrese un monto correcto");
+                return;
+            }
+
+            System.out.println("");
+            ArchivoUtil.mostrarAlerta("ÉXITO!", "Transacción realizada con éxito.");
+        } catch (NumberFormatException e) {
+            ArchivoUtil.mostrarAlerta("ERROR", "El monto ingresado no es válido.");
+        }
         Double valorActual = usuarioActual.getSaldoDisponible();
         Double valorFinal = valor + valorActual;
         usuarioActual.setSaldoDisponible(valorFinal);
         gestor.actualizarSaldoUsuario(usuarioActual, valorFinal);
+
         txt_montoIngresado.setText("");
     }
 

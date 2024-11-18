@@ -6,14 +6,16 @@ public class Transaccion {
     private String monto;
     private String descripcionOpcional;
     private String numeroCuenta;
+    public String nombreUsuario;
     
     public Transaccion(String idTransaccion, String fechaTransaccion, String monto,
-            String descripcionOpcional, String numeroCuenta) {
+            String descripcionOpcional, String numeroCuenta, String nombreUsuario) {
         this.idTransaccion = idTransaccion;
         this.fechaTransaccion = fechaTransaccion;
         this.monto = monto;
         this.descripcionOpcional = descripcionOpcional;
         this.numeroCuenta = numeroCuenta;
+        this.nombreUsuario = nombreUsuario;
     }
 
     public String getIdTransaccion() {
@@ -22,6 +24,14 @@ public class Transaccion {
 
     public String getFechaTransaccion() {
         return fechaTransaccion;
+    }
+
+    public String getNombreUsuario() {
+        return nombreUsuario;
+    }
+
+    public void setNombreUsuario(String nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
     }
 
     public String getMonto() {
@@ -39,9 +49,7 @@ public class Transaccion {
     @Override
     public String toString() {
         return "Transaccion [idTransaccion=" + idTransaccion + ", fechaTransaccion=" + fechaTransaccion + ", monto="
-                + monto + ", descripcionOpcional=" + descripcionOpcional + ", numeroCuenta=" + numeroCuenta + "]";
+                + monto + ", descripcionOpcional=" + descripcionOpcional + ", numeroCuenta=" + numeroCuenta
+                + ", nombreUsuario=" + nombreUsuario + "]";
     }
-
-
-    
 }

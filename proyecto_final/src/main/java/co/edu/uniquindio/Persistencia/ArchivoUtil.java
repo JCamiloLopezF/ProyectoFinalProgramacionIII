@@ -148,24 +148,9 @@ public class ArchivoUtil {
 		}
 		return aux;
 	}
-/*
-Este es para cuando quiero sobreescibir la informacion
-public static void guardarRecursoSerializado(String rutaArchivo, Object recurso) throws Exception {
-    public static void salvarRecursoSerializado(String rutaArchivo, Object object)	throws Exception {
-		ObjectOutputStream oos = null;
-		try {
-			oos = new ObjectOutputStream(new FileOutputStream(rutaArchivo));
-			oos.writeObject(object);
-		} catch (Exception e) {
-			throw e;
-		} finally {
-			if (oos != null)
-				oos.close();
-		}
-	}
-*/
+
     //binarios
-    public static void salvarRecursoSerializado(String rutaArchivo, Object object, boolean append) throws Exception {
+    /**public static void salvarRecursoSerializado(String rutaArchivo, Object object, boolean append) throws Exception {
         ObjectOutputStream oos = null;
         try {
             // Si el archivo existe y estamos en modo append, usamos un ObjectOutputStream especial
@@ -186,24 +171,49 @@ public static void guardarRecursoSerializado(String rutaArchivo, Object recurso)
         } finally {
             if (oos != null) oos.close();
         }
-    }
-
-    /**public static Object cargarRecursoSerializadoXML(String rutaArchivo) throws IOException {
-        XMLDecoder decodificadorXML;
-        Object objetoXML;
-        decodificadorXML = new XMLDecoder(new FileInputStream(rutaArchivo));
-        objetoXML = decodificadorXML.readObject();
-        decodificadorXML.close();
-        return objetoXML;
-    }
-
-    public static void salvarRecursoSerializadoXML(String rutaArchivo, Object nuevoObjeto) throws IOException {
-        XMLEncoder codificadorXML;
-
-        codificadorXML = new XMLEncoder(new FileOutputStream(rutaArchivo));
-        codificadorXML.writeObject(nuevoObjeto);
-        codificadorXML.close();
     }**/
+
+    public static void salvarRecursoSerializado(String rutaArchivo, Object object, boolean append) throws Exception {
+        ObjectOutputStream oos = null;
+        // Creamos un nuevo hilo para ejecutar el proceso de escritura en paralelo
+        Thread hiloEscritura = new Thread(() -> extracted(rutaArchivo, object, append, oos));
+            
+                // Iniciamos el hilo para que se ejecute en segundo plano
+                hiloEscritura.start();
+            
+                // Esperamos a que el hilo termine antes de continuar con la ejecución del programa principal
+                try {
+                    hiloEscritura.join(); // Esto bloquea la ejecución hasta que el hilo termine
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        
+            private static void extracted(String rutaArchivo, Object object, boolean append, ObjectOutputStream oos) {
+                try {
+                    // Si el archivo existe y estamos en modo append, usamos un ObjectOutputStream especial
+                    if (append && new File(rutaArchivo).exists()) {
+                        oos = new ObjectOutputStream(new FileOutputStream(rutaArchivo, true)) {
+                            @Override
+                            protected void writeStreamHeader() throws IOException {
+                                reset(); // Evitar escribir el encabezado de nuevo
+                            }
+                        };
+                    } else {
+                        // Si el archivo no existe o no estamos en modo append, creamos un nuevo archivo
+                        oos = new ObjectOutputStream(new FileOutputStream(rutaArchivo));
+                    }
+                    oos.writeObject(object);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    try {
+                        if (oos != null) oos.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
 
     public static List<Object> cargarRecursoSerializadoXML(String rutaArchivo) throws IOException {
         List<Object> objetosXML = new ArrayList<>();
@@ -235,8 +245,18 @@ public static void guardarRecursoSerializado(String rutaArchivo, Object recurso)
         }
     }
 
+    public static void mostrarAlerta(String titulo, String mensaje) {
+        Alert alerta = new Alert(AlertType.INFORMATION);
+        alerta.setTitle(titulo);
+        alerta.setHeaderText(null);
+        alerta.setContentText(mensaje);
+        alerta.showAndWait();
+    }
 
 
+
+
+    
 
 
 
@@ -255,7 +275,7 @@ public static void guardarRecursoSerializado(String rutaArchivo, Object recurso)
         File archivoOriginal = new File(rutaArchivoOriginal);
         String nombreArchivo = archivoOriginal.getName().replaceFirst("[.][^.]+$", "");
 
-        String nombreArchivoBackup = nombreArchivo + "_" + dia + mes + anio + "_" + hora + "_" + minuto + "_" + segundo;
+        String nombreArchivoBackup = nombreArchivo + "" + dia + mes + anio + "" + hora + "" + minuto + "" + segundo;
         return archivoOriginal.getParent() + File.separator + "backup" +  File.separator + nombreArchivoBackup;
     }
 
@@ -280,13 +300,5 @@ public static void guardarRecursoSerializado(String rutaArchivo, Object recurso)
         }
 
         System.out.println("Copia de seguridad creada: " + rutaArchivoRespaldo);
-    }
-
-    public static void mostrarAlerta(String titulo, String mensaje) {
-        Alert alerta = new Alert(AlertType.INFORMATION);
-        alerta.setTitle(titulo);
-        alerta.setHeaderText(null);
-        alerta.setContentText(mensaje);
-        alerta.showAndWait();
     }
 }

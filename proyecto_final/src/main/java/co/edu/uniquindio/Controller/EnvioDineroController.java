@@ -16,8 +16,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 
 public class EnvioDineroController {
 
@@ -66,8 +64,8 @@ public class EnvioDineroController {
         double montoUsuario = usuarioActual.getSaldoDisponible();
         double montoFinal = montoUsuario - monto;
 
-        Transaccion transaccion = new Transaccion(idTransaccion, fecha, montoStr, descripcion, numeroCuenta);
-        guardarTransaccion(transaccion);
+        Transaccion transaccion = new Transaccion(idTransaccion, fecha, montoStr, descripcion, numeroCuenta, usuarioActual.getIdUsuario());
+        guardarTransaccion(transaccion, usuarioActual);
 
         if (numeroCuenta.isEmpty() || montoStr.isEmpty() || fecha == null) {
             ArchivoUtil.mostrarAlerta("ERROR!", "Por favor, complete todos los campos requeridos.");
@@ -92,10 +90,10 @@ public class EnvioDineroController {
         App.setRoot("usuarioView", "Luxora Wallet - Pagina principal");
     }
 
-    public void guardarTransaccion(Transaccion transaccion) throws IOException{
+    public void guardarTransaccion(Transaccion transaccion, Usuario usuario) throws IOException{
         //GUardado del usuario en archivoUsuarios
         GestorArchivo persistencia = new GestorArchivo();
-        persistencia.guardarTransaccion(transaccion);
+        persistencia.guardarTransaccion(transaccion, usuario);
         luxoraWallet.getTransacciones().add(transaccion);
     }
 

@@ -127,7 +127,7 @@ public class GestorArchivo {
 		ArchivoUtil.guardarArchivo(rutaArchivoUsuarios, String.join("\n", contenidoActualizado), false);
 	}
 
-	public void guardarTransaccion(Transaccion transaccion) throws IOException{
+	public void guardarTransaccion(Transaccion transaccion, Usuario usuario) throws IOException{
         rutaArchivoUsuarios = obtenerRutaProperties("rutaArchivoTransacciones");
         StringBuilder textoTransaccion = new StringBuilder();
 		
@@ -135,28 +135,55 @@ public class GestorArchivo {
 		textoTransaccion.append(transaccion.getFechaTransaccion()+"@@");
 		textoTransaccion.append(transaccion.getMonto()+"@@");
 		textoTransaccion.append(transaccion.getDescripcionOpcional()+"@@");
-		textoTransaccion.append(transaccion.getNumeroCuenta() + "\n");
+		textoTransaccion.append(transaccion.getNumeroCuenta() + "@@");
+		textoTransaccion.append(usuario.getIdUsuario() + "\n" );
 
 		ArchivoUtil.guardarArchivo(rutaArchivoUsuarios,textoTransaccion.toString(),true);
     }
 
-    public LinkedList<Transaccion> cargarTransacciones(LuxoraWallet luxoraWallet)throws IOException {
+    public LinkedList<Transaccion> cargarTransacciones(LuxoraWallet luxoraWallet, Usuario usuario) throws IOException {
+		// Obtiene la ruta al archivo de transacciones desde las properties
 		rutaArchivoUsuarios = obtenerRutaProperties("rutaArchivoTransacciones");
-
+	
+		// Lista para almacenar las transacciones filtradas
+		LinkedList<Transaccion> transaccionesFiltradas = new LinkedList<>();
+	
+		// Lee las líneas del archivo
 		ArrayList<String> contenido = ArchivoUtil.leerArchivo(rutaArchivoUsuarios);
-
-		for (String transaccionTexto: contenido) {
+	
+		for (String transaccionTexto : contenido) {
+			// Divide la línea en partes usando "@@" como separador
 			String[] split = transaccionTexto.split("@@");
-
-			if (split.length >= 3) {
-				Transaccion transaccion = new Transaccion(split[0], split[1], split[2], split[3], split [4]);
-				luxoraWallet.getTransacciones().add(transaccion);
+	
+			if (split.length == 6) {
+				try {
+					// Verifica si el id del usuario de la transacción coincide con el id del usuario actual
+					String idUsuarioTransaccion = split[5];
+					if (idUsuarioTransaccion.equals(usuario.getIdUsuario())) {
+						// Crea una nueva transacción a partir de los datos
+						Transaccion transaccion = new Transaccion(
+							split[0], // Detalle 1
+							split[1], // Detalle 2
+							split[2], // Detalle 3
+							split[3], // Detalle 4
+							split[4], // Detalle 5
+							idUsuarioTransaccion // ID del usuario
+						);
+						transaccionesFiltradas.add(transaccion);
+					}
+				} catch (Exception e) {
+					System.err.println("Error al procesar la transacción: " + transaccionTexto);
+				}
 			} else {
 				System.err.println("Línea con datos incompletos: " + transaccionTexto);
 			}
 		}
-		return luxoraWallet.getTransacciones();
+	
+		// Asigna las transacciones cargadas a la wallet del usuario
+		luxoraWallet.setTransacciones(transaccionesFiltradas);
+		return transaccionesFiltradas;
 	}
+	
 	
 
 	public void guardarPresupuesto(Presupuesto presupuesto, Usuario usuario) throws IOException {

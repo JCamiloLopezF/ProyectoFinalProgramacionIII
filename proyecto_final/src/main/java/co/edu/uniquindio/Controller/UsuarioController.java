@@ -2,7 +2,6 @@ package co.edu.uniquindio.Controller;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.LinkedList;
 import java.util.ResourceBundle;
 
 import co.edu.uniquindio.App;
@@ -13,11 +12,10 @@ import co.edu.uniquindio.Persistencia.GestorArchivo;
 import co.edu.uniquindio.View.UsuarioView;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 
 public class UsuarioController {
 
@@ -65,6 +63,11 @@ public class UsuarioController {
     @FXML
     void btn_gestionarCuentas(MouseEvent event) {
 
+    }
+
+    @FXML
+    void btn_gestionarPresupuestos(MouseEvent event) throws IOException {
+        App.setRoot("gestionPresupuestosView", "Gestione sus presupuestos");
     }
 
     @FXML

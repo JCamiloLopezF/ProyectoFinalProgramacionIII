@@ -1,27 +1,14 @@
 package co.edu.uniquindio.Model;
 
 public class Presupuesto {
-    public String idPresupuesto;
     public String nombre;
-    public double montoTotalAsignado;
-    public double montoGastado;
-    public Categoria categoria;
+    public double monto;
+    public String nombreUsuario;
     
-    public Presupuesto(String idPresupuesto, String nombre, double montoTotalAsignado, double montoGastado,
-            Categoria categoria) {
-        this.idPresupuesto = idPresupuesto;
+    public Presupuesto(String nombre, double monto, String nombreUsuario) {
         this.nombre = nombre;
-        this.montoTotalAsignado = montoTotalAsignado;
-        this.montoGastado = montoGastado;
-        this.categoria = categoria;
-    }
-
-    public String getIdPresupuesto() {
-        return idPresupuesto;
-    }
-
-    public void setIdPresupuesto(String idPresupuesto) {
-        this.idPresupuesto = idPresupuesto;
+        this.monto = monto;
+        this.nombreUsuario = nombreUsuario;
     }
 
     public String getNombre() {
@@ -33,34 +20,23 @@ public class Presupuesto {
     }
 
     public double getMontoTotalAsignado() {
-        return montoTotalAsignado;
+        return monto;
     }
 
-    public void setMontoTotalAsignado(double montoTotalAsignado) {
-        this.montoTotalAsignado = montoTotalAsignado;
+    public void setMontoTotalAsignado(double monto) {
+        this.monto = monto;
     }
 
-    public double getMontoGastado() {
-        return montoGastado;
+    public String getNombreUsuario() {
+        return nombreUsuario;
     }
 
-    public void setMontoGastado(double montoGastado) {
-        this.montoGastado = montoGastado;
-    }
-
-    public Categoria getCategoria() {
-        return categoria;
-    }
-
-    public void setCategoria(Categoria categoria) {
-        this.categoria = categoria;
+    public void setNombreUsuario(String nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
     }
 
     @Override
     public String toString() {
-        return "Presupuesto [idPresupuesto=" + idPresupuesto + ", nombre=" + nombre + ", montoTotalAsignado="
-                + montoTotalAsignado + ", montoGastado=" + montoGastado + ", categoria=" + categoria + "]";
+        return "Presupuesto [nombre=" + nombre + ", monto=" + monto + ", nombreUsuario=" + nombreUsuario + "]";
     }
-
-    
 }

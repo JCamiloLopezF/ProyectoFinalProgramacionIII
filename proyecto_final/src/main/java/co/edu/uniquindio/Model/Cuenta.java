@@ -1,5 +1,8 @@
 package co.edu.uniquindio.Model;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public class Cuenta {
     public String idCuenta;
     public String nombreBanco;
@@ -15,22 +18,15 @@ public class Cuenta {
         this.numeroCuenta = numeroCuenta;
         this.tipoCuenta = tipoCuenta;
         this.saldo = saldo;
-        this.transacciones = new LinkedList<>();
+        this.nombreUsuario = nombreUsuario;
     }
 
-    public String getIdCuenta() {
+    public String getIdCuenta(){
+        return idCuenta;
     }
 
     public void setIdCuenta(String idCuenta) {
         this.idCuenta = idCuenta;
-    }
-
-    public String getNombreUsuario() {
-        return nombreUsuario;
-    }
-
-    public void setNombreUsuario(String nombreUsuario) {
-        this.nombreUsuario = nombreUsuario;
     }
 
     public String getNombreBanco() {
@@ -55,9 +51,27 @@ public class Cuenta {
         this.tipoCuenta = tipoCuenta;
     }
 
+    public double getSaldo() {return saldo;}
+
+    public void setSaldo(double saldo) {this.saldo = saldo;}
+
+    public String getNombreUsuario() {
+        return nombreUsuario;
+    }
+
+    public void setNombreUsuario(String nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
+    }
+
+    public void agregarTransaccion(Transaccion transaccion) {
+        transacciones.add(transaccion);
+    }
+
+    public List<Transaccion> getTransacciones() {return transacciones;}
+
     @Override
     public String toString() {
         return "Cuenta [idCuenta=" + idCuenta + ", nombreBanco=" + nombreBanco + ", numeroCuenta=" + numeroCuenta
-                + ", tipoCuenta=" + tipoCuenta + "]";
+                + ", tipoCuenta=" + tipoCuenta + ", saldo=" + saldo + "]";
     }
 }

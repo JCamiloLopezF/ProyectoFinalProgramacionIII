@@ -61,10 +61,24 @@ public class Usuario implements Serializable{
         this.correo = correo;
     }
 
-    
-
     public String getNumeroTelefono() {
         return numeroTelefono;
+    }
+
+    public LinkedList<Presupuesto> getPresupuestos() {
+        return presupuestos;
+    }
+
+    public void setPresupuestos(LinkedList<Presupuesto> presupuestos) {
+        this.presupuestos = presupuestos;
+    }
+
+    public LinkedList<Transaccion> getTransacciones() {
+        return transacciones;
+    }
+
+    public void setTransacciones(LinkedList<Transaccion> transacciones) {
+        this.transacciones = transacciones;
     }
 
     public void setNumeroTelefono(String numeroTelefono) {
@@ -116,5 +130,9 @@ public class Usuario implements Serializable{
 
     public void setDireccion(String direccion) {
         this.direccion = direccion;
+    }
+
+    public void agregarPresupuesto(Presupuesto presupuesto) {
+        presupuestos.add(presupuesto);
     }
 }

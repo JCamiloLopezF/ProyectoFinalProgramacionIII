@@ -71,5 +71,10 @@
             <Font name="Berlin Sans FB" size="18.0" />
          </font>
       </Text>
+      <Text layoutX="442.0" layoutY="281.0" onMousePressed="#btn_gestionarPresupuestos" strokeType="OUTSIDE" strokeWidth="0.0" text="Gestionar presupuestos">
+         <font>
+            <Font name="Berlin Sans FB" size="18.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>

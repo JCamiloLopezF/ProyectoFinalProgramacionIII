@@ -1,12 +1,8 @@
 package co.edu.uniquindio.Persistencia;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -14,6 +10,7 @@ import java.util.Properties;
 
 import co.edu.uniquindio.Model.Cuenta;
 import co.edu.uniquindio.Model.LuxoraWallet;
+import co.edu.uniquindio.Model.Presupuesto;
 import co.edu.uniquindio.Model.Transaccion;
 import co.edu.uniquindio.Model.Usuario;
 
@@ -251,7 +248,6 @@ public class GestorArchivo {
 					System.out.println("Error al guardar los presupuestos: " + e.getMessage());
 				}
 				return montoEliminado;
-				
 			}
 		}
 

@@ -69,6 +69,31 @@ public class GestorArchivo {
 		return luxoraWallet.getUsuarios();
 	}
 
+	public void eliminarUsuario(String correo) throws IOException {
+		rutaArchivoUsuarios = obtenerRutaProperties("rutaArchivosUsuarios");
+
+		ArrayList<String> contenidoArchivo = ArchivoUtil.leerArchivo(rutaArchivoUsuarios);
+		ArrayList<String> contenidoActualizado = new ArrayList<>();
+
+		boolean usuarioEncontrado = false;
+
+		for (String linea : contenidoArchivo) {
+			String[] datos = linea.split("@@");
+
+			if (datos[1].equals(correo)) {
+				usuarioEncontrado = true;
+			} else {
+				contenidoActualizado.add(linea);
+			}
+		}
+
+		if (usuarioEncontrado) {
+			ArchivoUtil.guardarArchivo(rutaArchivoUsuarios, String.join("\n", contenidoActualizado), false);
+		} else {
+			System.err.println("Usuario no encontrado: " + correo);
+		}
+	}
+
 	public void actualizarDatosParcialesUsuario(Usuario usuarioActualizado, String nuevaDireccion, String nuevoTelefono, String nuevaContrasenia) throws IOException {
 		rutaArchivoUsuarios = obtenerRutaProperties("rutaArchivoUsuarios");
 	
@@ -296,9 +321,9 @@ public class GestorArchivo {
 //ARCHIVOS DE CUENTAS BANCARIAS
 //************************
 
- public void guardarCuentaBancaria(Cuenta cuenta) throws IOException{
+	public void guardarCuentaBancaria(Cuenta cuenta) throws IOException{
 		rutaArchivoCuentas = obtenerRutaProperties("rutaArchivoCuentas");
-        StringBuilder textoCuenta = new StringBuilder();
+		StringBuilder textoCuenta = new StringBuilder();
 		
 		textoCuenta.append(cuenta.getIdCuenta()+"@@");
 		textoCuenta.append(cuenta.getNombreBanco()+"@@");
@@ -308,7 +333,7 @@ public class GestorArchivo {
 		textoCuenta.append(cuenta.getNombreUsuario() + "\n");
 
 		ArchivoUtil.guardarArchivo(rutaArchivoCuentas,textoCuenta.toString(),true);
-    }
+	}
 
     public LinkedList<Cuenta> cargarCuentasBancarias(Usuario usuario)throws IOException {
 		rutaArchivoCuentas = obtenerRutaProperties("rutaArchivoCuentas");
@@ -389,4 +414,44 @@ public class GestorArchivo {
 		// Sobrescribir el archivo con el contenido actualizado
 		ArchivoUtil.guardarArchivo(rutaArchivoCuentas, String.join("\n", contenidoActualizado), false);
 	}
+
+
+	public double eliminarCuenta(String idCuenta) throws IOException {
+		// Obtiene la ruta del archivo de cuentas desde las properties
+		rutaArchivoUsuarios = obtenerRutaProperties("rutaArchivoCuentas");
+		List<String> lineasArchivo = ArchivoUtil.leerArchivo(rutaArchivoUsuarios);
+		StringBuilder textoCuentas = new StringBuilder();
+		double saldoEliminado = 0;
+		boolean encontrado = false;
+
+		// Recorrer las líneas del archivo para buscar la cuenta por ID
+		for (String linea : lineasArchivo) {
+			String[] partes = linea.split("@@");
+			String idActual = partes[0];  // idCuenta está en la tercera posición
+			double saldo = Double.parseDouble(partes[1]);
+
+			// Si el id coincide, se elimina (no se añade al nuevo contenido)
+			if (idActual.equals(idCuenta) && !encontrado) {
+				saldoEliminado = saldo;
+				System.out.println("Saldo de la cuenta eliminada: " + saldoEliminado);
+				encontrado = true;
+			} else {
+				// Si no coincide, se guarda en el nuevo contenido
+				textoCuentas.append(linea).append("\n");
+			}
+		}
+
+		// Sobrescribir el archivo con las cuentas actualizadas
+		ArchivoUtil.guardarArchivo(rutaArchivoUsuarios, textoCuentas.toString(), false);
+
+		if (encontrado) {
+			System.out.println("Cuenta eliminada correctamente.");
+		} else {
+			System.out.println("Cuenta no encontrada.");
+		}
+
+		return saldoEliminado;
+	}
+
+
 }

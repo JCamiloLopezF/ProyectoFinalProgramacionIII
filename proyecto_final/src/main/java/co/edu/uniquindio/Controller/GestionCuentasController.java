@@ -5,6 +5,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import co.edu.uniquindio.App;
+import co.edu.uniquindio.Persistencia.GestorArchivo;
+import co.edu.uniquindio.View.CuentaView;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -39,14 +41,17 @@ public class GestionCuentasController {
     @FXML
     private Label txt_cuentas;
 
+    GestorArchivo gestor = new GestorArchivo();
+
     @FXML
     void btn_ActualizarCuenta(ActionEvent event) throws IOException {
         App.setRoot("actualizarCuenta", "Actualización de cuenta -LuxoraWallet-");
     }
 
     @FXML
-    void btn_EliminarCuenta(ActionEvent event) {
-
+    void btn_EliminarCuenta(ActionEvent event) throws IOException {
+        String idCuenta = txt_cuentaEliminar.getText();
+        gestor.eliminarCuenta(idCuenta);
     }
 
     @FXML
@@ -59,14 +64,20 @@ public class GestionCuentasController {
         App.setRoot("usuarioView", "Luxora Wallet - Pagina principal");
     }
 
+    public void inicializarCuentas() throws IOException{
+        txt_cuentas.setText("");
+        CuentaView cuentas = new CuentaView();
+        txt_cuentas.setText(cuentas.mostrarListaCuentas());
+    }
+
     @FXML
-    void initialize() {
+    void initialize() throws IOException {
+
+        inicializarCuentas();
         assert btn_ActualizarCuenta != null : "fx:id=\"btn_ActualizarCuenta\" was not injected: check your FXML file 'gestionCuentasView.fxml'.";
         assert btn_EliminarCuenta != null : "fx:id=\"btn_EliminarCuenta\" was not injected: check your FXML file 'gestionCuentasView.fxml'.";
         assert btn_crearCuenta != null : "fx:id=\"btn_crearCuenta\" was not injected: check your FXML file 'gestionCuentasView.fxml'.";
         assert btn_regresar != null : "fx:id=\"btn_regresar\" was not injected: check your FXML file 'gestionCuentasView.fxml'.";
         assert txt_cuentas != null : "fx:id=\"txt_cuentas\" was not injected: check your FXML file 'gestionCuentasView.fxml'.";
-
     }
-
 }

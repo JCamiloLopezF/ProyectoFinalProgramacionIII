@@ -9,6 +9,7 @@ import co.edu.uniquindio.Model.LuxoraWallet;
 import co.edu.uniquindio.Model.Usuario;
 import co.edu.uniquindio.Persistencia.ArchivoUtil;
 import co.edu.uniquindio.Persistencia.GestorArchivo;
+import co.edu.uniquindio.View.CuentaView;
 import co.edu.uniquindio.View.UsuarioView;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -47,6 +48,7 @@ public class UsuarioController {
     Usuario usuarioActual = luxoraWallet.getUsuarioSeleccionado().get(0);
     UsuarioView usuario = new UsuarioView();
     GestorArchivo gestor = new GestorArchivo();
+    CuentaView cuentas = new CuentaView();
     
     boolean visibilidadSaldo = false;
 

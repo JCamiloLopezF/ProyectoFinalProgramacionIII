@@ -12,6 +12,16 @@ public class GestorCuentas {
         usuario.getCuentasBancarias().add(nuevaCuenta);
     }
 
+    public void eliminarCuentaBancaria(Usuario usuario, String idCuenta) {
+        for (int i = 0; i < usuario.getCuentasBancarias().size(); i++) {
+            Cuenta cuenta = usuario.getCuentasBancarias().get(i);
+            if (cuenta.getIdCuenta().equals(idCuenta)) {
+                usuario.getCuentasBancarias().remove(i);
+                break;
+            }
+        }
+    }
+
     public void actualizarCuentaBancaria(Usuario usuario, String idCuenta, String nuevoNombreBanco, String nuevoNumeroCuenta, String nuevoTipoCuenta, double nuevoSaldo){
         for (Cuenta cuenta : usuario.getCuentasBancarias()) {
             if (cuenta.getIdCuenta().equals(idCuenta)) {
@@ -22,10 +32,6 @@ public class GestorCuentas {
                 break;
             }
         }
-    }
-
-    public void eliminarCuentaBancaria(Usuario usuario, String idCuenta) {
-        usuario.getCuentasBancarias().removeIf(cuenta -> cuenta.getIdCuenta().equals(idCuenta));
     }
 
     public List<Cuenta> obtenerTodasLasCuentas(Usuario usuario) {

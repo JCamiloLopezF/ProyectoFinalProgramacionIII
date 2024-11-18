@@ -27,7 +27,7 @@ public class Administrador extends Usuario {
     public void eliminarUsuario(String correo) throws IOException {
         Usuario usuario = buscarUsuarioPorCorreo(correo);
         if (usuario != null) {
-            //new GestorArchivo().eliminarUsuario(usuario);
+            new GestorArchivo().eliminarUsuario(correo);
         }
     }
 
@@ -35,8 +35,15 @@ public class Administrador extends Usuario {
         return new GestorArchivo().cargarUsuarios(new LuxoraWallet());
     }
 
-    public Usuario buscarUsuarioPorCorreo(String correo) {
-        //...
+    public Usuario buscarUsuarioPorCorreo(String correo) throws IOException {
+        LuxoraWallet luxoraWallet = new LuxoraWallet();
+        List<Usuario> listaUsuarios = new GestorArchivo().cargarUsuarios(luxoraWallet);
+
+        for (Usuario usuario : listaUsuarios) {
+            if (usuario.getCorreo().equalsIgnoreCase(correo)) {
+                return usuario;
+            }
+        }
         return null;
     }
 

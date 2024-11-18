@@ -61,8 +61,8 @@ public class UsuarioController {
     }
 
     @FXML
-    void btn_gestionarCuentas(MouseEvent event) {
-
+    void btn_gestionarCuentas(MouseEvent event) throws IOException {
+        App.setRoot("gestionCuentasView", "Gestiona tus cuentas -LuxoraWallet-");
     }
 
     @FXML

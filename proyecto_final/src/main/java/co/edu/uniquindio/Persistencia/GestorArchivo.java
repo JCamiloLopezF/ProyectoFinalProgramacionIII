@@ -237,8 +237,6 @@ public class GestorArchivo {
 		return presupuestosFiltrados;
 	}
 
-
-
 	public void guardarPresupuestosActualizados(Usuario usuario) throws IOException {
 		// Obtiene la ruta del archivo de presupuestos
 		rutaArchivoUsuarios = obtenerRutaProperties("rutaArchivoPresupuestos");
@@ -281,6 +279,9 @@ public class GestorArchivo {
 		System.out.println("Presupuesto no encontrado.");
 		return 0;
 	}
+
+
+
 
 
 
@@ -381,6 +382,4 @@ public class GestorArchivo {
 		// Sobrescribir el archivo con el contenido actualizado
 		ArchivoUtil.guardarArchivo(rutaArchivoCuentas, String.join("\n", contenidoActualizado), false);
 	}
-
-
 }

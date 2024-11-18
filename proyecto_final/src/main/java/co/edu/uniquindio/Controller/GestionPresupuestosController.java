@@ -41,14 +41,13 @@ public class GestionPresupuestosController {
     @FXML
     void btn_EliminarPresupuesto(ActionEvent event) {
         String nombrePresupuesto = txt_presupuestoEliminar.getText();
-        double presupuestoEliminado = gestor.eliminarPresupuesto(nombrePresupuesto, usuarioActual);
+        //double presupuestoEliminado = gestor.eliminarPresupuesto(nombrePresupuesto, usuarioActual);
 
         Double valorUsuario = usuarioActual.getSaldoDisponible();
 
-        Double valorNuevo = valorUsuario + presupuestoEliminado;
-        usuarioActual.setSaldoDisponible(valorNuevo);
-        
-
+       // Double valorNuevo = valorUsuario + presupuestoEliminado;
+        //usuarioActual.setSaldoDisponible(valorNuevo);
+        gestor.eliminarPresupuesto(nombrePresupuesto, usuarioActual);
     }
 
     @FXML

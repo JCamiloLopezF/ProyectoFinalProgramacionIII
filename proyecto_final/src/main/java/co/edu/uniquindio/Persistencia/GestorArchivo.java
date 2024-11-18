@@ -255,30 +255,37 @@ public class GestorArchivo {
 
 	public double eliminarPresupuesto(String nombrePresupuesto, Usuario usuario) {
 		LinkedList<Presupuesto> presupuestos = usuario.getPresupuestos();
+		Presupuesto presupuestoAEliminar = null;
+		double montoEliminado = 0;
 
-		// Recorre la lista para buscar el presupuesto por nombre
+		// Buscar el presupuesto que coincida con el nombre
 		for (Presupuesto presupuesto : presupuestos) {
 			if (presupuesto.getNombre().equals(nombrePresupuesto)) {
-				double montoEliminado = presupuesto.getMontoTotalAsignado(); // Accede al monto
+				presupuestoAEliminar = presupuesto;
+				montoEliminado = presupuesto.getMontoTotalAsignado();
 				System.out.println("Monto del presupuesto eliminado: " + montoEliminado);
-
-				// Elimina el presupuesto de la lista
-				presupuestos.remove(presupuesto);
-				System.out.println("Presupuesto eliminado correctamente.");
-
-				// Guarda la lista actualizada en el archivo
-				try {
-					guardarPresupuestosActualizados(usuario);
-				} catch (IOException e) {
-					System.out.println("Error al guardar los presupuestos: " + e.getMessage());
-				}
-				return montoEliminado;
+				break;
 			}
 		}
 
-		System.out.println("Presupuesto no encontrado.");
-		return 0;
+		// Si se encontró el presupuesto, eliminarlo de la lista
+		if (presupuestoAEliminar != null) {
+			presupuestos.remove(presupuestoAEliminar);
+			System.out.println("Presupuesto eliminado correctamente.");
+
+			// Guarda la lista actualizada en el archivo
+			try {
+				guardarPresupuestosActualizados(usuario);
+			} catch (IOException e) {
+				System.out.println("Error al guardar los presupuestos: " + e.getMessage());
+			}
+		} else {
+			System.out.println("Presupuesto no encontrado.");
+		}
+
+		return montoEliminado;
 	}
+
 
 
 

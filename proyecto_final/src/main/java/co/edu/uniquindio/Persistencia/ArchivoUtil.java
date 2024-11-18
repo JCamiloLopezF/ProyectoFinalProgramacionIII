@@ -21,6 +21,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
+import co.edu.uniquindio.Model.Usuario;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
@@ -148,6 +149,8 @@ public class ArchivoUtil {
 		}
 		return aux;
 	}
+
+
 /*
 Este es para cuando quiero sobreescibir la informacion
 public static void guardarRecursoSerializado(String rutaArchivo, Object recurso) throws Exception {
@@ -187,6 +190,24 @@ public static void guardarRecursoSerializado(String rutaArchivo, Object recurso)
             if (oos != null) oos.close();
         }
     }
+
+
+    /**public static void salvarRecursoSerializado(String nombreArchivo, Object object) {
+        new Thread(() -> {
+            try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(nombreArchivo))) {
+                oos.writeObject(object);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }).start();
+    }**/
+
+
+
+
+
+
+
 
     /**public static Object cargarRecursoSerializadoXML(String rutaArchivo) throws IOException {
         XMLDecoder decodificadorXML;

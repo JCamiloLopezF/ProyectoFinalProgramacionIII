@@ -160,8 +160,6 @@ public class GestorArchivo {
 		}
 		return luxoraWallet.getTransacciones();
 	}
-<<<<<<< Updated upstream
-=======
 	
 
 	public void guardarPresupuesto(Presupuesto presupuesto, Usuario usuario) throws IOException {
@@ -362,5 +360,4 @@ public class GestorArchivo {
 	}
 
 
->>>>>>> Stashed changes
 }

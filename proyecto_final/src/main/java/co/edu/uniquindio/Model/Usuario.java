@@ -1,12 +1,9 @@
 package co.edu.uniquindio.Model;
 
 import java.io.Serializable;
-<<<<<<< Updated upstream
-=======
 import java.util.LinkedList;
 
 import co.edu.uniquindio.Persistencia.GestorArchivo;
->>>>>>> Stashed changes
 
 public class Usuario implements Serializable{
     public String idUsuario;
@@ -16,15 +13,11 @@ public class Usuario implements Serializable{
     private String direccion;
     private String contrasenia;
     private double saldoDisponible;
-<<<<<<< Updated upstream
-   // public Cuenta cuentasAsociadas;
-=======
     private LinkedList<Cuenta> cuentasBancarias;
     private LinkedList<Presupuesto> presupuestos;
     private LinkedList<Transaccion> transacciones;
     public Cuenta cuentaBilletera;
     GestorArchivo gestor = new GestorArchivo();
->>>>>>> Stashed changes
 
     public Usuario(){
 
@@ -39,13 +32,9 @@ public class Usuario implements Serializable{
         this.direccion = direccion;
         this.contrasenia = contrasenia;
         this.saldoDisponible = saldoDisponible;
-<<<<<<< Updated upstream
-      //  this.cuentasAsociadas = cuentasAsociadas;
-=======
         this.presupuestos = new LinkedList<>();
         this.transacciones = new LinkedList<>();
         this.cuentasBancarias = new LinkedList<>();
->>>>>>> Stashed changes
     }
 
     public String getIdUsuario() {
@@ -97,16 +86,6 @@ public class Usuario implements Serializable{
     public void setSaldoDisponible(double saldoDisponible) {
         this.saldoDisponible = saldoDisponible;
     }
-<<<<<<< Updated upstream
-    
-    /*
-    public Cuenta getCuentasAsociadas() {
-        return cuentasAsociadas;
-    }
-
-    public void setCuentasAsociadas(Cuenta cuentasAsociadas) {
-        this.cuentasAsociadas = cuentasAsociadas;
-=======
 
     public LinkedList<Cuenta> getCuentasBancarias() {
         return cuentasBancarias;
@@ -122,9 +101,7 @@ public class Usuario implements Serializable{
 
     public void setCuentaBilletera(Cuenta cuentaBilletera) {
         this.cuentaBilletera = cuentaBilletera;
->>>>>>> Stashed changes
     }
-    */
 
     @Override
     public String toString() {

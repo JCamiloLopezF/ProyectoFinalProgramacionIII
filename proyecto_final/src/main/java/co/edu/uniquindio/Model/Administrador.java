@@ -1,7 +1,9 @@
 package co.edu.uniquindio.Model;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import co.edu.uniquindio.Persistencia.GestorArchivo;
 import co.edu.uniquindio.Persistencia.GestorCuentas;
@@ -47,6 +49,7 @@ public class Administrador extends Usuario {
         return null;
     }
 
+    //Gestionar cuentas bancarias
     public void agregarCuentaBancaria(Usuario usuario, String idCuenta, String nombreBanco, String numeroCuenta, String tipoCuenta, Double saldo) throws IOException {
         new GestorCuentas().agregarCuentaBancaria(usuario, idCuenta, nombreBanco, numeroCuenta, tipoCuenta, saldo, usuario.getNombreCompleto());
     }
@@ -59,12 +62,21 @@ public class Administrador extends Usuario {
         new GestorCuentas().eliminarCuentaBancaria(usuario, idCuenta);
     }
 
-    public void crearTransaccion(Transaccion transaccion) throws IOException {
-        //new GestorArchivo().guardarTransaccion(transaccion);
+    //Gestionar transacciones
+
+    public void crearTransaccion(String idTransaccion, String fechaTransaccion, String monto, String descripcionOpcional, String numeroCuenta, String idUsuario, Usuario usuario) throws IOException {
+        
+        Transaccion transaccion = new Transaccion(idTransaccion, fechaTransaccion, monto, descripcionOpcional, numeroCuenta, idUsuario );
+        
+        new GestorArchivo().guardarTransaccion(transaccion, usuario);
     }
 
-    public List<Transaccion> listarTransacciones() throws IOException {
-        return new GestorArchivo().cargarTransacciones(new LuxoraWallet(), new Usuario());
+    public List<Transaccion> listarTransacciones(Usuario usuario) throws IOException {
+        List<Transaccion> todasLasTransacciones = new GestorArchivo().cargarTransacciones(new LuxoraWallet(), usuario);
+
+        return todasLasTransacciones.stream()
+        .filter(transaccion -> transaccion.getIdUsuario().equals(usuario.getIdUsuario()))
+        .collect(Collectors.toList());
     }
 
     public void mostrarEstadisticas() {
@@ -79,8 +91,14 @@ public class Administrador extends Usuario {
         //aaaaa
     }
 
-    public void usuariosConMasTransacciones() {
-        //robinson tiene huevo
+    public void usuariosConMasTransacciones() throws IOException{
+        List<Transaccion> transacciones = listarTransacciones();
+        Map<String, Integer> conteoTransacciones = new HashMap<>();
+
+        for (Transaccion transaccion : transacciones) {
+            String correoUsuario = transaccion.getCorreoUsuario();
+            conteoTransacciones.put(correoUsuario, conteoTransacciones.getOrDefault(correoUsuario,0) + 1 );
+        }
     }
 
     public void saldoPromedioUsuarios() {

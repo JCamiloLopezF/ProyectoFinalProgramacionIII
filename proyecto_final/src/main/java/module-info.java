@@ -6,6 +6,8 @@ module co.edu.uniquindio {
     requires java.desktop;
     requires jdk.jfr;
     requires java.xml;
+    requires spring.beans;
+    requires spring.amqp;
 
     opens co.edu.uniquindio to javafx.fxml;
     exports co.edu.uniquindio;

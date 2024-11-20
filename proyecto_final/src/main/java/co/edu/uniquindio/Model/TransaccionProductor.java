@@ -8,10 +8,12 @@ public class TransaccionProductor {
     @Autowired
     private AmqpTemplate amqpTemplate;
 
-    private static final String QUEUE_NAME = "transaccionesQueue";
+    private String exchange = "intercambio-transaccion-luxora";
+    private String routingKey = "transaccion.key";
 
-    public void enviarTransaccion(Transaccion transaccion) {
-        amqpTemplate.convertAndSend(QUEUE_NAME, transaccion);
+    public void enviarTransaccion(TransaccionDTO transaccion) {
+        amqpTemplate.convertAndSend(exchange, routingKey, transaccion);
+        System.out.println("Transacción enviada: " + transaccion);
     }
     
 }

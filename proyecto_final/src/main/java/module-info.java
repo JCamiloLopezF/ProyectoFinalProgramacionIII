@@ -8,6 +8,10 @@ module co.edu.uniquindio {
     requires java.xml;
     requires spring.beans;
     requires spring.amqp;
+    requires spring.rabbit;
+    requires spring.context;
+    requires spring.boot;
+    requires spring.boot.autoconfigure;
 
     opens co.edu.uniquindio to javafx.fxml;
     exports co.edu.uniquindio;

@@ -7,6 +7,8 @@ import java.util.ResourceBundle;
 import co.edu.uniquindio.App;
 import co.edu.uniquindio.Model.LuxoraWallet;
 import co.edu.uniquindio.Model.Transaccion;
+import co.edu.uniquindio.Model.TransaccionDTO;
+import co.edu.uniquindio.Model.TransaccionProductor;
 import co.edu.uniquindio.Model.Usuario;
 import co.edu.uniquindio.Persistencia.ArchivoUtil;
 import co.edu.uniquindio.Persistencia.GestorArchivo;
@@ -77,6 +79,13 @@ public class EnvioDineroController {
                 ArchivoUtil.mostrarAlerta("ERROR!", "Ingrese un monto correcto");
                 return;
             }
+
+            TransaccionDTO transaccionDTO = new TransaccionDTO(
+                idTransaccion, fecha, monto, descripcion, numeroCuenta, usuarioActual.getIdUsuario()
+            );
+
+            TransaccionProductor transaccionProductor = new TransaccionProductor();
+            transaccionProductor.enviarTransaccion(transaccionDTO);
 
             System.out.println("");
             ArchivoUtil.mostrarAlerta("ÉXITO!", "Transacción realizada con éxito.");

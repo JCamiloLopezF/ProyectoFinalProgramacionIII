@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.Controller.AdministradorController">
+   <children>
+      <ImageView fitHeight="500.0" fitWidth="834.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@imagenes/imagen_fondo_usuario.png" />
+         </image>
+      </ImageView>
+      <Text fill="#ff5d5d" layoutX="642.0" layoutY="57.0" onMousePressed="#btn_cerrarSesion" strokeType="OUTSIDE" strokeWidth="0.0" text="Cerrar sesión" wrappingWidth="115.60336303710938">
+         <font>
+            <Font name="Berlin Sans FB" size="18.0" />
+         </font>
+      </Text>
+      <Text layoutX="106.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hola Administrador" wrappingWidth="221.20333862304688">
+         <font>
+            <Font name="Berlin Sans FB" size="25.0" />
+         </font>
+      </Text>
+      <Text layoutX="517.0" layoutY="187.0" onMousePressed="#btn_gestionarUsuario" strokeType="OUTSIDE" strokeWidth="0.0" text="Gestionar usuario" wrappingWidth="167.60336303710938">
+         <font>
+            <Font name="Berlin Sans FB" size="21.0" />
+         </font>
+      </Text>
+      <Label fx:id="txt_transaccionesRealizadas" alignment="TOP_LEFT" layoutX="89.0" layoutY="208.0" prefHeight="258.0" prefWidth="370.0" wrapText="true">
+         <font>
+            <Font name="Berlin Sans FB" size="19.0" />
+         </font>
+      </Label>
+      <Text fill="#9c1e1e" layoutX="143.0" layoutY="185.0" onMousePressed="#btn_cerrarSesion" strokeType="OUTSIDE" strokeWidth="0.0" text="Transacciones realizadas" textAlignment="CENTER" wrappingWidth="221.20333862304688">
+         <font>
+            <Font name="Berlin Sans FB" size="17.0" />
+         </font>
+      </Text>
+      <Text layoutX="517.0" layoutY="258.0" onMousePressed="#btn_gestionarCuentas" strokeType="OUTSIDE" strokeWidth="0.0" text="Gestionar cuentas" wrappingWidth="167.60336303710938">
+         <font>
+            <Font name="Berlin Sans FB" size="21.0" />
+         </font>
+      </Text>
+      <Text layoutX="517.0" layoutY="333.0" onMousePressed="#btn_estadisticas" strokeType="OUTSIDE" strokeWidth="0.0" text="Estadisticas" wrappingWidth="167.60336303710938">
+         <font>
+            <Font name="Berlin Sans FB" size="21.0" />
+         </font>
+      </Text>
+      <Text layoutX="517.0" layoutY="407.0" onMousePressed="#btn_generarReportes" strokeType="OUTSIDE" strokeWidth="0.0" text="Generar reportes" wrappingWidth="167.60336303710938">
+         <font>
+            <Font name="Berlin Sans FB" size="21.0" />
+         </font>
+      </Text>
+   </children>
+</AnchorPane>

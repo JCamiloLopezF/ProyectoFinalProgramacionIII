@@ -10,7 +10,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.Controller.UsuarioController">
    <children>
-      <ImageView fitHeight="500.0" fitWidth="800.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="500.0" fitWidth="858.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@imagenes/imagen_fondo_usuario.png" />
          </image>
@@ -61,12 +61,12 @@
          </font>
       </Text>
       <TextField fx:id="txt_montoIngresado" layoutX="52.0" layoutY="399.0" prefHeight="26.0" prefWidth="208.0" promptText="deposite dinero" style="-fx-background-radius: 20;" />
-      <Button fx:id="btn_depositar" layoutX="112.0" layoutY="445.0" mnemonicParsing="false" onAction="#btn_depositar" prefHeight="26.0" prefWidth="86.0" style="-fx-background-color: #f082a7; -fx-background-radius: 20;" text="Depositar">
+      <Button fx:id="btn_depositar" layoutX="112.0" layoutY="445.0" mnemonicParsing="false" onAction="#btn_depositar" prefHeight="26.0" prefWidth="86.0" style="-fx-background-color: #f082a7; -fx-background-radius: 20;" text="Depositar" textFill="#943232">
          <font>
             <Font name="Berlin Sans FB" size="14.0" />
          </font>
       </Button>
-      <Text layoutX="437.0" layoutY="418.0" onMousePressed="#btn_preguntasFrecuentes" strokeType="OUTSIDE" strokeWidth="0.0" text="Preguntas frecuentes">
+      <Text layoutX="442.0" layoutY="418.0" onMousePressed="#btn_preguntasFrecuentes" strokeType="OUTSIDE" strokeWidth="0.0" text="Preguntas frecuentes">
          <font>
             <Font name="Berlin Sans FB" size="18.0" />
          </font>

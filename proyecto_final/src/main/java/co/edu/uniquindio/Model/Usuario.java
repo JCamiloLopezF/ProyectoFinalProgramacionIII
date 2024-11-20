@@ -1,6 +1,7 @@
 package co.edu.uniquindio.Model;
 
 import java.io.Serializable;
+import java.io.IOException;
 import java.util.LinkedList;
 
 import co.edu.uniquindio.Persistencia.GestorArchivo;
@@ -134,5 +135,27 @@ public class Usuario implements Serializable{
 
     public void agregarPresupuesto(Presupuesto presupuesto) {
         presupuestos.add(presupuesto);
+    }
+
+    public LinkedList<Transaccion> filtrarTransaccionesPorCategoria(Categoria categoria) {
+        LinkedList<Transaccion> transaccionesFiltradas = new LinkedList<>();
+        for (Transaccion transaccion : transacciones) {
+            if (transaccion.getCategoria().equals(categoria)) {
+                transaccionesFiltradas.add(transaccion);
+            }
+        }
+        return transaccionesFiltradas;
+    }
+
+    public double consultarEstadoPresupuesto(String nombrePresupuesto) throws IOException {
+        return gestor.consultarEstadoPresupuesto(nombrePresupuesto, this);
+    }
+
+    public double consultarMontoGastado(String nombrePresupuesto) throws IOException {
+        return gestor.consultarMontoGastado(nombrePresupuesto, this);
+    }
+
+    public double monitorearGastoPorCategoria(String nombreCategoria) throws IOException {
+        return gestor.monitorearGastoPorCategoria(nombreCategoria, this);
     }
 }

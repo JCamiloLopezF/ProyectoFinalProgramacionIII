@@ -5,13 +5,14 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import co.edu.uniquindio.App;
+import co.edu.uniquindio.DTO.TransaccionDTO;
+import co.edu.uniquindio.Model.Categoria;
 import co.edu.uniquindio.Model.LuxoraWallet;
 import co.edu.uniquindio.Model.Transaccion;
-import co.edu.uniquindio.Model.TransaccionDTO;
-import co.edu.uniquindio.Model.TransaccionProductor;
 import co.edu.uniquindio.Model.Usuario;
 import co.edu.uniquindio.Persistencia.ArchivoUtil;
 import co.edu.uniquindio.Persistencia.GestorArchivo;
+import co.edu.uniquindio.sockets.productor.TransaccionProductor;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -51,6 +52,9 @@ public class EnvioDineroController {
     @FXML
     private TextField txt_numeroCuenta;
 
+    @FXML
+    private TextField txt_categoria;
+
     LuxoraWallet luxoraWallet = LuxoraWallet.getInstanciaUnica();
     Usuario usuarioActual = luxoraWallet.getUsuarioSeleccionado().get(0);
     GestorArchivo gestor = new GestorArchivo();
@@ -66,7 +70,23 @@ public class EnvioDineroController {
         double montoUsuario = usuarioActual.getSaldoDisponible();
         double montoFinal = montoUsuario - monto;
 
-        Transaccion transaccion = new Transaccion(idTransaccion, fecha, montoStr, descripcion, numeroCuenta, usuarioActual.getIdUsuario());
+        String categoriaId = txt_categoria.getText();
+        Categoria categoria = null;
+        try {
+            categoria = gestor.listarCategorias().stream()
+                    .filter(cat -> cat.getIdCategoria().equals(categoriaId))
+                    .findFirst()
+                    .orElse(null);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if (categoria == null) {
+            ArchivoUtil.mostrarAlerta("ERROR!", "Categoría no válida.");
+            return;
+        }
+
+        Transaccion transaccion = new Transaccion(idTransaccion, fecha, montoStr, descripcion, numeroCuenta, usuarioActual.getIdUsuario(), categoria);
         guardarTransaccion(transaccion, usuarioActual);
 
         if (numeroCuenta.isEmpty() || montoStr.isEmpty() || fecha == null) {
@@ -121,6 +141,6 @@ public class EnvioDineroController {
         assert txt_monto != null : "fx:id=\"txt_monto\" was not injected: check your FXML file 'envioDinero.fxml'.";
         assert txt_nombreUsuario != null : "fx:id=\"txt_nombreUsuario\" was not injected: check your FXML file 'envioDinero.fxml'.";
         assert txt_numeroCuenta != null : "fx:id=\"txt_numeroCuenta\" was not injected: check your FXML file 'envioDinero.fxml'.";
-
+        assert txt_categoria != null : "fx:id=\"txt_categoria\" was not injected: check your FXML file 'envioDinero.fxml'.";
     }
 }

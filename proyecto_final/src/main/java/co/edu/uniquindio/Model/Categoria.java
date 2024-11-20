@@ -1,9 +1,14 @@
 package co.edu.uniquindio.Model;
 
+import java.util.LinkedList;
+
 public class Categoria {
     public String idCategoria;
     public String nombre;
     public String descripcion;
+
+    public Categoria() {
+    }
     
     public Categoria(String idCategoria, String nombre, String descripcion) {
         this.idCategoria = idCategoria;
@@ -40,5 +45,5 @@ public class Categoria {
         return "Categoria [idCategoria=" + idCategoria + ", nombre=" + nombre + ", descripcion=" + descripcion + "]";
     }
 
-    
+    private static LinkedList<Categoria> categorias = new LinkedList<>();
 }

@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.ResourceBundle;
 
 import co.edu.uniquindio.App;
+import co.edu.uniquindio.Model.Categoria;
 import co.edu.uniquindio.Model.LuxoraWallet;
 import co.edu.uniquindio.Model.Transaccion;
 import co.edu.uniquindio.Model.Usuario;
@@ -18,6 +19,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
+import javafx.scene.control.TextField;
 
 public class VerTransaccionesController {
 
@@ -38,6 +40,9 @@ public class VerTransaccionesController {
 
     @FXML
     private Label txt_transacciones;
+
+    @FXML
+    private TextField txt_categoriaFiltro;
 
     LuxoraWallet luxora = LuxoraWallet.getInstanciaUnica();
     VerDineroView verDineroView = new VerDineroView();
@@ -60,6 +65,33 @@ public class VerTransaccionesController {
         btn_mostrarTransaccion.setDisable(true);
     }
 
+    @FXML
+    void btn_filtrarTransaccion(ActionEvent event) {
+        String categoriaId = txt_categoriaFiltro.getText();
+        GestorArchivo gestor = new GestorArchivo();
+        Categoria categoria = null;
+        try {
+            categoria = gestor.listarCategorias().stream()
+                    .filter(cat -> cat.getIdCategoria().equals(categoriaId))
+                    .findFirst()
+                    .orElse(null);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if (categoria == null) {
+            txt_transacciones.setText("Categoría no válida.");
+            return;
+        }
+
+        LinkedList<Transaccion> transaccionesFiltradas = usuarioActual.filtrarTransaccionesPorCategoria(categoria);
+        StringBuilder transaccionesTexto = new StringBuilder();
+        for (Transaccion transaccion : transaccionesFiltradas) {
+            transaccionesTexto.append(transaccion.toString()).append("\n");
+        }
+        txt_transacciones.setText(transaccionesTexto.toString());
+    }
+
     public LinkedList<Transaccion> mostrarTransacciones() {
         GestorArchivo gestor = new GestorArchivo();
         try {
@@ -80,5 +112,6 @@ public class VerTransaccionesController {
         assert btn_regresar != null : "fx:id=\"btn_regresar\" was not injected: check your FXML file 'verTransacciones.fxml'.";
         assert txt_nombreUsuario != null : "fx:id=\"txt_nombreUsuario\" was not injected: check your FXML file 'verTransacciones.fxml'.";
         assert txt_transacciones != null : "fx:id=\"txt_transacciones\" was not injected: check your FXML file 'verTransacciones.fxml'.";
+        assert txt_categoriaFiltro != null : "fx:id=\"txt_categoriaFiltro\" was not injected: check your FXML file 'verTransacciones.fxml'.";
     }
 }

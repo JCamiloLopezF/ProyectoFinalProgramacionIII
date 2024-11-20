@@ -50,7 +50,9 @@ public class inicioSesionController {
         if(inicioView.verificarUsuarioExistente(id, contrasenia) == true){
             App.setRoot("usuarioView", "Luxora Wallet - Pagina principal");
         }
-        else{
+        else if(id.equals("admin") && contrasenia.equals("admin")){
+            App.setRoot("aministradorView", "Administra LuxoraWallet");
+        }else{
             System.out.println("No puedes iniciar sesión");
             ArchivoUtil.mostrarAlerta("Error!!", "La contraseña es incorrecta");
         }

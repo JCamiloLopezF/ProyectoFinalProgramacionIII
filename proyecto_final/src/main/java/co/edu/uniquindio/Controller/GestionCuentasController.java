@@ -72,7 +72,7 @@ public class GestionCuentasController {
 
     @FXML
     void initialize() throws IOException {
-
+        
         inicializarCuentas();
         assert btn_ActualizarCuenta != null : "fx:id=\"btn_ActualizarCuenta\" was not injected: check your FXML file 'gestionCuentasView.fxml'.";
         assert btn_EliminarCuenta != null : "fx:id=\"btn_EliminarCuenta\" was not injected: check your FXML file 'gestionCuentasView.fxml'.";

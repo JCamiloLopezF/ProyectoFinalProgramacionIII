@@ -33,6 +33,21 @@ public class GestionPresupuestosController {
     @FXML
     private Label txt_presupuestos;
 
+    @FXML
+    private TextField txt_presupuestoConsultar;
+
+    @FXML
+    private TextField txt_categoriaConsultar;
+
+    @FXML
+    private Label lbl_estadoPresupuesto;
+
+    @FXML
+    private Label lbl_montoGastado;
+
+    @FXML
+    private Label lbl_gastoCategoria;
+
     LuxoraWallet luxoraWallet = LuxoraWallet.getInstanciaUnica();
     Usuario usuarioActual = luxoraWallet.getUsuarioSeleccionado().get(0);
     GestorArchivo gestor = new GestorArchivo();
@@ -47,7 +62,6 @@ public class GestionPresupuestosController {
 
         Double valorNuevo = valorUsuario + presupuestoEliminado;
         usuarioActual.setSaldoDisponible(valorNuevo);
-
     }
 
     @FXML
@@ -59,6 +73,27 @@ public class GestionPresupuestosController {
     void btn_regresar(MouseEvent event) throws IOException {
         App.setRoot("usuarioView", "Luxora Wallet - Pagina principal");
 
+    }
+
+    @FXML
+    void btn_ConsultarEstadoPresupuesto(ActionEvent event) throws IOException {
+        String nombrePresupuesto = txt_presupuestoConsultar.getText();
+        double estadoPresupuesto = usuarioActual.consultarEstadoPresupuesto(nombrePresupuesto);
+        lbl_estadoPresupuesto.setText("Estado del presupuesto: " + estadoPresupuesto);
+    }
+
+    @FXML
+    void btn_ConsultarMontoGastado(ActionEvent event) throws IOException {
+        String nombrePresupuesto = txt_presupuestoConsultar.getText();
+        double montoGastado = usuarioActual.consultarMontoGastado(nombrePresupuesto);
+        lbl_montoGastado.setText("Monto gastado: " + montoGastado);
+    }
+
+    @FXML
+    void btn_MonitorearGastoPorCategoria(ActionEvent event) throws IOException {
+        String nombreCategoria = txt_categoriaConsultar.getText();
+        double gastoCategoria = usuarioActual.monitorearGastoPorCategoria(nombreCategoria);
+        lbl_gastoCategoria.setText("Gasto en categoría: " + gastoCategoria);
     }
 
     public void inicializarPresupuestos() throws IOException{

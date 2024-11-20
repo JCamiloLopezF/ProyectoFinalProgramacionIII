@@ -12,6 +12,7 @@ module co.edu.uniquindio {
     requires spring.context;
     requires spring.boot;
     requires spring.boot.autoconfigure;
+    requires com.rabbitmq.client;
 
     opens co.edu.uniquindio to javafx.fxml;
     exports co.edu.uniquindio;

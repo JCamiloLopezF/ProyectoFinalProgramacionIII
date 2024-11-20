@@ -9,6 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
 
+import co.edu.uniquindio.Model.Categoria;
 import co.edu.uniquindio.Model.Cuenta;
 import co.edu.uniquindio.Model.LuxoraWallet;
 import co.edu.uniquindio.Model.Presupuesto;
@@ -16,6 +17,7 @@ import co.edu.uniquindio.Model.Transaccion;
 import co.edu.uniquindio.Model.Usuario;
 
 public class GestorArchivo {
+	LuxoraWallet luxora = LuxoraWallet.getInstanciaUnica();
     String rutaArchivoUsuarios = "";
 	String rutaArchivoCuentas = "";
 
@@ -124,6 +126,43 @@ public class GestorArchivo {
 		ArchivoUtil.guardarArchivo(rutaArchivoUsuarios, String.join("\n", contenidoActualizado), false);
 	}
 
+
+	public void actualizarDatosAdminsUsuario(String usuarioActualizado, String nuevaDireccion, String nuevoTelefono) throws IOException {
+		rutaArchivoUsuarios = obtenerRutaProperties("rutaArchivoUsuarios");
+	
+		// Cargar el contenido completo del archivo
+		ArrayList<String> contenidoArchivo = ArchivoUtil.leerArchivo(rutaArchivoUsuarios);
+		ArrayList<String> contenidoActualizado = new ArrayList<>();
+	
+		for (String linea : contenidoArchivo) {
+			String[] datos = linea.split("@@");
+	
+			// Verificar si esta línea corresponde al usuario que queremos actualizar
+			if (datos[4].equals(usuarioActualizado)) { // Comparar por correo (o algún identificador único)
+				// Actualizar solo los datos específicos sin modificar los otros
+				datos[3] = nuevaDireccion; // Actualiza la dirección
+				datos[2] = nuevoTelefono;  // Actualiza el teléfono
+	
+				// Reconstruir la línea con los datos actualizados
+				String lineaActualizada = String.join("@@", datos);
+				contenidoActualizado.add(lineaActualizada);
+			} else {
+				// Mantener la línea sin cambios
+				contenidoActualizado.add(linea);
+			}
+		}
+	
+		// Sobrescribir el archivo con el contenido actualizado
+		ArchivoUtil.guardarArchivo(rutaArchivoUsuarios, String.join("\n", contenidoActualizado), false);
+	}
+
+
+
+
+
+
+
+
 	public void actualizarSaldoUsuario(Usuario usuarioActualizado, Double saldo) throws IOException {
 		rutaArchivoUsuarios = obtenerRutaProperties("rutaArchivoUsuarios");
 	
@@ -165,6 +204,7 @@ public class GestorArchivo {
 		textoTransaccion.append(usuario.getIdUsuario() + "\n" );
 
 		ArchivoUtil.guardarArchivo(rutaArchivoUsuarios,textoTransaccion.toString(),true);
+		luxora.getTransacciones().add(transaccion);
     }
 
     public LinkedList<Transaccion> cargarTransacciones(LuxoraWallet luxoraWallet, Usuario usuario) throws IOException {
@@ -181,19 +221,23 @@ public class GestorArchivo {
 			// Divide la línea en partes usando "@@" como separador
 			String[] split = transaccionTexto.split("@@");
 	
-			if (split.length == 6) {
+			if (split.length == 7) { // Updated length check to 7
 				try {
 					// Verifica si el id del usuario de la transacción coincide con el id del usuario actual
 					String idUsuarioTransaccion = split[5];
 					if (idUsuarioTransaccion.equals(usuario.getIdUsuario())) {
-						// Crea una nueva transacción a partir de los datos
+						 // Create a new Categoria object
+						Categoria categoria = new Categoria(); // Assuming Categoria has a default constructor
+						categoria.setNombre(split[6]); // Assuming Categoria has a setNombre method
+						// Create a new transaction with the new constructor
 						Transaccion transaccion = new Transaccion(
-							split[0], // Detalle 1
-							split[1], // Detalle 2
-							split[2], // Detalle 3
-							split[3], // Detalle 4
-							split[4], // Detalle 5
-							idUsuarioTransaccion // ID del usuario
+							split[0], // idTransaccion
+							split[1], // fechaTransaccion
+							split[2], // monto
+							split[3], // descripcionOpcional
+							split[4], // numeroCuenta
+							idUsuarioTransaccion, // nombreUsuario
+							categoria // categoria
 						);
 						transaccionesFiltradas.add(transaccion);
 					}
@@ -209,8 +253,51 @@ public class GestorArchivo {
 		luxoraWallet.setTransacciones(transaccionesFiltradas);
 		return transaccionesFiltradas;
 	}
+
+
+	public LinkedList<Transaccion> cargarTodasLasTransacciones(LuxoraWallet luxoraWallet) throws IOException {
+		// Obtiene la ruta al archivo de transacciones desde las properties
+		rutaArchivoUsuarios = obtenerRutaProperties("rutaArchivoTransacciones");
+		LinkedList<Transaccion> todasLasTransacciones = new LinkedList<>();
+		ArrayList<String> contenido = ArchivoUtil.leerArchivo(rutaArchivoUsuarios);
 	
+		for (String transaccionTexto : contenido) {
+			// Divide la línea en partes usando "@@" como separador
+			String[] split = transaccionTexto.split("@@");
 	
+			if (split.length == 7) { // Updated length check to 7
+				try {
+					// Create a new Categoria object
+					Categoria categoria = new Categoria(); // Assuming Categoria has a default constructor
+					categoria.setNombre(split[6]); // Assuming Categoria has a setNombre method
+					// Create a new transaction with the new constructor
+					Transaccion transaccion = new Transaccion(
+						split[0], // idTransaccion
+						split[1], // fechaTransaccion
+						split[2], // monto
+						split[3], // descripcionOpcional
+						split[4], // numeroCuenta
+						split[5], // nombreUsuario
+						categoria // categoria
+					);
+					todasLasTransacciones.add(transaccion);
+				} catch (Exception e) {
+					System.err.println("Error al procesar la transacción: " + transaccionTexto);
+				}
+			} else {
+				System.err.println("Línea con datos incompletos: " + transaccionTexto);
+			}
+		}
+	
+		// Asigna todas las transacciones cargadas a la wallet
+		luxoraWallet.setTransacciones(todasLasTransacciones);
+		return todasLasTransacciones;
+	}
+
+
+//*********************************
+//ARCHIVOS DE PRESUPUESTOS
+//*********************************
 
 	public void guardarPresupuesto(Presupuesto presupuesto, Usuario usuario) throws IOException {
 		rutaArchivoUsuarios = obtenerRutaProperties("rutaArchivoPresupuestos");
@@ -279,6 +366,22 @@ public class GestorArchivo {
 		ArchivoUtil.guardarArchivo(rutaArchivoUsuarios, textoPresupuestos.toString(), false);
 	}
 
+	public void actualizarPresupuesto(String nombrePresupuesto, double nuevoMonto) throws IOException {
+		rutaArchivoUsuarios = obtenerRutaProperties("rutaArchivoPresupuestos");
+    	List<String> lineasArchivo = ArchivoUtil.leerArchivo(rutaArchivoUsuarios);
+    	StringBuilder textoPresupuestos = new StringBuilder();
+
+		for (String linea : lineasArchivo) {
+			String[] partes = linea.split("@@");
+			if (partes[0].equals(nombrePresupuesto)) {
+				partes[1] = String.valueOf(nuevoMonto);
+			}
+			textoPresupuestos.append(String.join("@@", partes)).append("\n");
+		}
+
+		ArchivoUtil.guardarArchivo(rutaArchivoUsuarios, textoPresupuestos.toString(), false);
+	}
+
 	public double eliminarPresupuesto(String nombrePresupuesto) throws IOException {
 		// Ruta del archivo de presupuestos
 		rutaArchivoUsuarios = obtenerRutaProperties("rutaArchivoPresupuestos");
@@ -314,6 +417,110 @@ public class GestorArchivo {
 		}
 
 		return montoEliminado;
+	}
+
+	public double consultarEstadoPresupuesto(String nombrePresupuesto, Usuario usuario) throws IOException {
+		rutaArchivoUsuarios = obtenerRutaProperties("rutaArchivoPresupuestos");
+		ArrayList<String> lineasArchivo = ArchivoUtil.leerArchivo(rutaArchivoUsuarios);
+
+		for (String linea : lineasArchivo) {
+			String[] partes = linea.split("@@");
+			if (partes[0].equals(nombrePresupuesto) && partes[2].equals(usuario.getIdUsuario())) {
+				return Double.parseDouble(partes[1]);
+			}
+		}
+		return 0;
+	}
+
+	public double consultarMontoGastado(String nombrePresupuesto, Usuario usuario) throws IOException {
+		rutaArchivoUsuarios = obtenerRutaProperties("rutaArchivoTransacciones");
+		ArrayList<String> lineasArchivo = ArchivoUtil.leerArchivo(rutaArchivoUsuarios);
+		double montoGastado = 0;
+
+		for (String linea : lineasArchivo) {
+			String[] partes = linea.split("@@");
+			if (partes[5].equals(usuario.getIdUsuario())) {
+				montoGastado += Double.parseDouble(partes[2]);
+			}
+		}
+		return montoGastado;
+	}
+
+	public double monitorearGastoPorCategoria(String nombreCategoria, Usuario usuario) throws IOException {
+		rutaArchivoUsuarios = obtenerRutaProperties("rutaArchivoTransacciones");
+		ArrayList<String> lineasArchivo = ArchivoUtil.leerArchivo(rutaArchivoUsuarios);
+		double montoGastado = 0;
+
+		for (String linea : lineasArchivo) {
+			String[] partes = linea.split("@@");
+			if (partes[5].equals(usuario.getIdUsuario()) && partes[6].equals(nombreCategoria)) {
+				montoGastado += Double.parseDouble(partes[2]);
+			}
+		}
+		return montoGastado;
+	}
+
+
+//************************
+//ARCHIVOS DE CATEGORIAS
+//************************
+
+
+	public void agregarCategoria(Categoria categoria) throws IOException {
+		rutaArchivoUsuarios = obtenerRutaProperties("rutaArchivoCategorias");
+		StringBuilder textoCategoria = new StringBuilder();
+		textoCategoria.append(categoria.getIdCategoria() + "@@");
+		textoCategoria.append(categoria.getNombre() + "@@");
+		textoCategoria.append(categoria.getDescripcion() + "\n");
+		ArchivoUtil.guardarArchivo(rutaArchivoUsuarios, textoCategoria.toString(), true);
+	}
+
+	public void actualizarCategoria(String idCategoria, String nuevoNombre, String nuevaDescripcion) throws IOException {
+		rutaArchivoUsuarios = obtenerRutaProperties("rutaArchivoCategorias");
+		List<String> lineasArchivo = ArchivoUtil.leerArchivo(rutaArchivoUsuarios);
+		StringBuilder textoCategorias = new StringBuilder();
+
+		for (String linea : lineasArchivo) {
+			String[] partes = linea.split("@@");
+			if (partes[0].equals(idCategoria)) {
+				partes[1] = nuevoNombre;
+				partes[2] = nuevaDescripcion;
+			}
+			textoCategorias.append(String.join("@@", partes)).append("\n");
+		}
+
+		ArchivoUtil.guardarArchivo(rutaArchivoUsuarios, textoCategorias.toString(), false);
+	}
+
+	public void eliminarCategoria(String idCategoria) throws IOException {
+		rutaArchivoUsuarios = obtenerRutaProperties("rutaArchivoCategorias");
+		List<String> lineasArchivo = ArchivoUtil.leerArchivo(rutaArchivoUsuarios);
+		StringBuilder textoCategorias = new StringBuilder();
+
+		for (String linea : lineasArchivo) {
+			String[] partes = linea.split("@@");
+			if (!partes[0].equals(idCategoria)) {
+				textoCategorias.append(linea).append("\n");
+			}
+		}
+
+		ArchivoUtil.guardarArchivo(rutaArchivoUsuarios, textoCategorias.toString(), false);
+	}
+
+	public LinkedList<Categoria> listarCategorias() throws IOException {
+		rutaArchivoUsuarios = obtenerRutaProperties("rutaArchivoCategorias");
+		LinkedList<Categoria> categorias = new LinkedList<>();
+		ArrayList<String> lineasArchivo = ArchivoUtil.leerArchivo(rutaArchivoUsuarios);
+
+		for (String linea : lineasArchivo) {
+			String[] partes = linea.split("@@");
+			if (partes.length == 3) {
+				Categoria categoria = new Categoria(partes[0], partes[1], partes[2]);
+				categorias.add(categoria);
+			}
+		}
+
+		return categorias;
 	}
 
 

@@ -7,16 +7,17 @@ public class Transaccion {
     private String descripcionOpcional;
     private String numeroCuenta;
     public String nombreUsuario;
+    private Categoria categoria;
     
     public Transaccion(String idTransaccion, String fechaTransaccion, String monto,
-            String descripcionOpcional, String numeroCuenta, String nombreUsuario) {
+            String descripcionOpcional, String numeroCuenta, String nombreUsuario, Categoria categoria) {
         this.idTransaccion = idTransaccion;
         this.fechaTransaccion = fechaTransaccion;
-        
         this.monto = monto;
         this.descripcionOpcional = descripcionOpcional;
         this.numeroCuenta = numeroCuenta;
         this.nombreUsuario = nombreUsuario;
+        this.categoria = categoria;
     }
 
     public String getIdTransaccion() {
@@ -62,7 +63,8 @@ public class Transaccion {
     @Override
     public String toString() {
         return "Transaccion [idTransaccion=" + idTransaccion + ", fechaTransaccion=" + fechaTransaccion + ", monto="
-                + monto + ", descripcionOpcional=" + descripcionOpcional + ", numeroCuenta=" + numeroCuenta + "]";
+                + monto + ", descripcionOpcional=" + descripcionOpcional + ", numeroCuenta=" + numeroCuenta
+                + ", categoria=" + categoria.getNombre() + "]";
     }
 
     public String getNombreUsuario() {
@@ -73,6 +75,11 @@ public class Transaccion {
         this.nombreUsuario = nombreUsuario;
     }
 
+    public Categoria getCategoria() {
+        return categoria;
+    }
 
-    
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
+    }
 }
